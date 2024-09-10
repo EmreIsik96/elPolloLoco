@@ -9,20 +9,22 @@ class World {
   statusBar = [new HealthBar(), new CoinBar(), new BottleBar()];
   thorwableObjects = [];
   coins = [];
+  collectedCoin = 0;
+  collectedBottles = 0;
   bottles = [];
+  coinCollectSound = new Audio('audio/coin-collect.mp3');
  
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.addCoins(8); // Erstelle 5 zufällige Coins (oder beliebige Anzahl)
-    this.addBottles(8);// Erstelle 5 zufällige Bottles (oder beliebige Anzahl)
+    this.addCoins(5); // Erstelle 5 zufällige Coins (oder beliebige Anzahl)
+    this.addBottles(5);// Erstelle 5 zufällige Bottles (oder beliebige Anzahl)
     this.draw();
     this.setWorld();
     this.run();
     console.log(this.statusBar);
-    
   }
 
   addCoins(amountOfCoins) {
@@ -59,7 +61,7 @@ class World {
     level1.enemies.forEach((enemy) =>{
       if(this.character.isColliding(enemy)){
         this.character.hit();
-        this.statusBar.setPercentageHealth(this.character.energy);
+        this.statusBar[0].setPercentageHealth(this.character.energy);
       }
     });
   }
@@ -68,19 +70,25 @@ class World {
   {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
+        this.coinCollectSound.play();
         this.coins.splice(i, 1); // Münze aus dem Array entfernen
+        this.collectedCoin ++;
+        this.statusBar[1].setCollectedCoins(this.collectedCoin);
+        
       }
     });
   }
 
-  // checkCollisonWithBottle()
-  // {
-  //   this.bottles.forEach((bottle, i) => {
-  //     if (this.character.isColliding(bottle)) {       
-  //       this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
-  //     }
-  //   });
-  // }
+  checkCollisonWithBottle()
+  {
+    this.bottles.forEach((bottle, i) => {
+      if (this.character.isColliding(bottle)) {       
+        this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
+        this.collectedBottles ++;
+        this.statusBar[2].setCollectedBottles(this.collectedBottles);
+      }
+    });
+  }
 
   checkThrowObjects(){
     if (this.keyboard.F) {

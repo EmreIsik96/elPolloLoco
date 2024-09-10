@@ -3,7 +3,6 @@ class Coins extends DrawableObject{
     y = 300;
     height = 160;
     width = 160;
-
     constructor()
     {
         super();
