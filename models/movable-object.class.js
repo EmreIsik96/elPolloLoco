@@ -23,7 +23,7 @@ class MovableObject extends DrawableObject{
   }
 }
 
-  playAnimate(images) {
+  playAnimate(images) { // lässt die Bilder im Cache anzeigen
     let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];

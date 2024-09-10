@@ -9,12 +9,11 @@ class ThorwableObject extends MovableObject{
     constructor(x, y){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_BOTTLE);
-        this.trow();
         this.x = x;
         this.y = y;
         this.height = 50;
         this.width = 60;
-
+        this.trow();
     }
 
     trow(){
@@ -23,6 +22,8 @@ class ThorwableObject extends MovableObject{
         setInterval(() => {
             this.x += 5;
         }, 20);
+        setInterval(() => {
+            this.playAnimate(this.IMAGES_BOTTLE)
+        }, 100);
     }
-
 }

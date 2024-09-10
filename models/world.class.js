@@ -6,7 +6,7 @@ class World {
   keyboard;
   world;
   camera_x = 0;
-  statusBar = new StatusBar();
+  statusBar = [new HealthBar(), new CoinBar(), new BottleBar()];
   thorwableObjects = [];
   coins = [];
   bottles = [];
@@ -21,6 +21,8 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    console.log(this.statusBar);
+    
   }
 
   addCoins(amountOfCoins) {
@@ -43,30 +45,48 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-      this.checkCollisionsWithCoins();
     }, 200);
   }
 
   checkCollisions(){
+    this.checkCollisonWithCoin();
+    this.checkCollisonWithEnemy();
+    this.checkCollisonWithBottle();
+  }
+
+  checkCollisonWithEnemy()
+  {
     level1.enemies.forEach((enemy) =>{
       if(this.character.isColliding(enemy)){
         this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
+        this.statusBar.setPercentageHealth(this.character.energy);
       }
     });
   }
-  checkThrowObjects(){
-    if (this.keyboard.F) {
-      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
-      this.thorwableObjects.push(bottle);
-    }
-  }
-  checkCollisionsWithCoins(){
+
+  checkCollisonWithCoin()
+  {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
         this.coins.splice(i, 1); // Münze aus dem Array entfernen
       }
     });
+  }
+
+  // checkCollisonWithBottle()
+  // {
+  //   this.bottles.forEach((bottle, i) => {
+  //     if (this.character.isColliding(bottle)) {       
+  //       this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
+  //     }
+  //   });
+  // }
+
+  checkThrowObjects(){
+    if (this.keyboard.F) {
+      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
+      this.thorwableObjects.push(bottle);
+    }
   }
 
   draw() {
@@ -75,7 +95,7 @@ class World {
     this.addObjectsToMap(this.level.backgroundObjects);
 
     this.ctx.translate(-this.camera_x, 0);
-    this.addToMap(this.statusBar);
+    this.addObjectsToMap(this.statusBar);
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.clouds);

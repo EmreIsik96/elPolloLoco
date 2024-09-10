@@ -14,7 +14,7 @@ class Bottles extends DrawableObject{
         this.x = 200 + Math.random() * 720 * 5; // Zufällige X-Koordinate
         this.y = 360 + Math.random();     // Zufällige Y-Koordinate
 
-        let randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLE_ON_THE_GROUND.length);
-        this.img = this.imageCache[this.IMAGES_BOTTLE_ON_THE_GROUND[randomIndex]];
+        let randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLE_ON_THE_GROUND.length); // 
+        this.img = this.imageCache[this.IMAGES_BOTTLE_ON_THE_GROUND[randomIndex]]; // switch between 2 Images 
     }
 }
