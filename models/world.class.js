@@ -27,22 +27,6 @@ class World {
     console.log(this.statusBar);
   }
 
-  addCoins(amountOfCoins) {
-    for (let i = 0; i < amountOfCoins; i++) {
-      this.coins.push(new Coins()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
-    }
-  }
-
-  addBottles(amountOfBottles) {
-    for (let i = 0; i < amountOfBottles; i++) {
-      this.bottles.push(new Bottles()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
-    }
-  }
-
-  setWorld() {
-    this.character.world = this;
-  }
-
   run(){
     setInterval(() => {
       this.checkCollisions();
@@ -54,6 +38,29 @@ class World {
     this.checkCollisonWithCoin();
     this.checkCollisonWithEnemy();
     this.checkCollisonWithBottle();
+  }
+
+  checkThrowObjects(){
+    if (this.keyboard.F) {
+      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
+      this.thorwableObjects.push(bottle);
+    }
+  }
+
+  setWorld() {
+    this.character.world = this;
+  }
+
+  addCoins(amountOfCoins) {
+    for (let i = 0; i < amountOfCoins; i++) {
+      this.coins.push(new Coins()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
+    }
+  }
+
+  addBottles(amountOfBottles) {
+    for (let i = 0; i < amountOfBottles; i++) {
+      this.bottles.push(new Bottles()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
+    }
   }
 
   checkCollisonWithEnemy()
@@ -90,12 +97,7 @@ class World {
     });
   }
 
-  checkThrowObjects(){
-    if (this.keyboard.F) {
-      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
-      this.thorwableObjects.push(bottle);
-    }
-  }
+ 
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
