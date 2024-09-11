@@ -14,7 +14,22 @@ class Chicken extends MovableObject {
     this.x = 720 + Math.random() * 720 * 2;
     this.speed = 0.5 + Math.random() * 0.75;
     this.animate();
+    this.hitCount = 0;
+    this.maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
+    this.dyingImage = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
   }
+
+  hitEnemy() {
+    this.hitCount++;
+    if (this.hitCount >= this.maxHits) {
+      this.dieEnemy();
+    }
+  }
+
+  dieEnemy() {
+   this.speed = 0;
+  }
+
 
   animate() {
     setInterval(() => {
@@ -24,6 +39,7 @@ class Chicken extends MovableObject {
     setInterval(() => {
       this.playAnimate(this.IMAGES_WALKING);
     }, 100);
+
   }
   
 }

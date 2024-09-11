@@ -1,5 +1,6 @@
 class World {
   character = new Character();
+  bottle = new Bottles();
   level = level1;
   canvas;
   ctx;
@@ -13,6 +14,7 @@ class World {
   collectedBottles = 0;
   bottles = [];
   coinCollectSound = new Audio('audio/coin-collect.mp3');
+  hitAndDieEnemySound = new Audio('audio/boss-sound.mp3')
  
 
   constructor(canvas, keyboard) {
@@ -24,7 +26,6 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
-    console.log(this.statusBar);
   }
 
   run(){
@@ -38,12 +39,16 @@ class World {
     this.checkCollisonWithCoin();
     this.checkCollisonWithEnemy();
     this.checkCollisonWithBottle();
+    this.checkCollisonEnemyWithBottle();
   }
 
   checkThrowObjects(){
+    
     if (this.keyboard.F) {
-      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
-      this.thorwableObjects.push(bottle);
+        let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100)
+        this.thorwableObjects.push(bottle);
+        // this.collectedBottles --;
+        // this.statusBar[2].setCollectedBottles(this.collectedBottles); // Update BottleBar
     }
   }
 
@@ -59,7 +64,7 @@ class World {
 
   addBottles(amountOfBottles) {
     for (let i = 0; i < amountOfBottles; i++) {
-      this.bottles.push(new Bottles()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
+      this.bottles.push(new Bottles()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu      
     }
   }
 
@@ -81,13 +86,11 @@ class World {
         this.coins.splice(i, 1); // Münze aus dem Array entfernen
         this.collectedCoin ++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
-        
       }
     });
   }
 
-  checkCollisonWithBottle()
-  {
+  checkCollisonWithBottle(){
     this.bottles.forEach((bottle, i) => {
       if (this.character.isColliding(bottle)) {       
         this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
@@ -97,7 +100,17 @@ class World {
     });
   }
 
- 
+  checkCollisonEnemyWithBottle() {
+    this.thorwableObjects.forEach((bottle) => {
+      level1.enemies.forEach((enemy) => {
+        if (bottle.bottleCollidingEnemy(enemy)) {
+           enemy.hitEnemy();
+           this.hitAndDieEnemySound.play();
+        }
+      });
+    });
+  }
+  
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

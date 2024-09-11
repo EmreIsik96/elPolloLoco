@@ -50,6 +50,13 @@ class MovableObject extends DrawableObject{
            this.y + 130 < mo.y + mo.height
   }
 
+  bottleCollidingEnemy(mo){
+    return this.x + this.width > mo.x && 
+           this.y  + this.height > mo.y && 
+           this.x < mo.x + mo.width + 5 && 
+           this.y  < mo.y + mo.height 
+  }
+
   hit()
   {
     this.energy -= 20;

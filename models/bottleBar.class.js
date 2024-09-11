@@ -19,12 +19,14 @@ class BottleBar extends DrawableObject {
     this.loadImages(this.IMAGES_BOTTLE_STATUS);
     this.setCollectedBottles(0);
   }
-  setCollectedBottles(amountForBottles)
+  setCollectedBottles(amountOfBottles)
   {
     this.y = 100;
-    this.collectedBottles = amountForBottles;
+    this.collectedBottles = amountOfBottles;
     let path = this.IMAGES_BOTTLE_STATUS[this.resolveImageIndex()]
     this.img = this.imageCache[path];
+   // console.log(this.collectedBottles);
+    
   }
 
   resolveImageIndex()
