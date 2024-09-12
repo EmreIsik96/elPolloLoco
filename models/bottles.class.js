@@ -6,8 +6,7 @@ class Bottles extends MovableObject{
     IMAGES_BOTTLE_ON_THE_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
-    ]
-    
+    ]    
     
     constructor(){
         super().loadImages(this.IMAGES_BOTTLE_ON_THE_GROUND);

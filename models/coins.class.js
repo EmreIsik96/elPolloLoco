@@ -3,6 +3,12 @@ class Coins extends DrawableObject{
     y = 300;
     height = 160;
     width = 160;
+    offset = {
+        top: 120,
+        bottom: 30,
+        right: 40,
+        left: 40,
+    }
     constructor()
     {
         super();

@@ -4,6 +4,7 @@ class Character extends MovableObject {
   height = 200;
   width = 100;
   speed = 1.75;
+  energy = 100;
   keyPressed = true;
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
@@ -42,6 +43,12 @@ class Character extends MovableObject {
   world;
   walking_sound = new Audio('audio/walk_char.mp3');
   jumping_sound = new Audio('audio/jump_char.mp3');
+  offset = {
+    top: 120,
+    bottom: 30,
+    right: 40,
+    left: 40,
+}
 
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");

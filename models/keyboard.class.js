@@ -6,5 +6,4 @@ class Keyboard
     DOWN = false;
     SPACE = false;
     F = false;
-
 }
