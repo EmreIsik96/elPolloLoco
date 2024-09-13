@@ -15,13 +15,15 @@ class World {
   bottles = [];
   coinCollectSound = new Audio("audio/coin-collect.mp3");
   hitAndDieEnemySound = new Audio("audio/boss-sound.mp3");
+  hurtCharacter = new Audio("audio/char_hurt.mp3");
+  collectBottleSound = new Audio('audio/collect_bottle.mp3')
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.addCoins(5); // Erstelle 5 zufällige Coins (oder beliebige Anzahl)
-    this.addBottles(5); // Erstelle 5 zufällige Bottles (oder beliebige Anzahl)
+    this.addBottles(10); // Erstelle 5 zufällige Bottles (oder beliebige Anzahl)
     this.draw();
     this.setWorld();
     this.run();
@@ -40,11 +42,12 @@ class World {
     }, 280);
     setInterval(() => {
       this.checkCollisonChickenWithBottle();
-    }, 300);
+    }, 280);
     setInterval(() => {
       this.checkCollisonWithBottle();
       this.checkCollisonWithCoin();
-    }, 100);
+      // this.checkCollisonWithChickenOnJumpKillChicken();
+    }, 20);
   }
 
   checkCollisions() {
@@ -54,6 +57,7 @@ class World {
     this.checkCollisonWithBottle();
     this.checkCollisonChickenWithBottle();
     this.checkCollisonBossWithBottle();
+    // this.checkCollisonWithChickenOnJumpKillChicken();
   }
 
   checkThrowObjects() {
@@ -87,9 +91,23 @@ class World {
         if (enemy.isDead) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
+        this.hurtCharacter.play();
       }
     });
   }
+
+  // checkCollisonWithChickenOnJumpKillChicken() {
+  //   level1.chicken.forEach((enemy) => {
+     
+  //     if (this.character.isColliding(enemy) && this.character.speedY <= 0 && this.character.isAboveGround) {
+  //       console.log(this.character.speedY);
+
+  //       if (enemy.isDead) return;
+  //       enemy.dieEnemy();
+  //       this.hitAndDieEnemySound.play();
+  //     }
+  //   });
+  // }
 
   checkCollisonWithEndboss() {
     level1.endboss.forEach((enemy) => {
@@ -118,6 +136,7 @@ class World {
         this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
+        this.collectBottleSound.play();
       }
     });
   }

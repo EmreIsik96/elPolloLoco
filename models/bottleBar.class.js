@@ -31,7 +31,9 @@ class BottleBar extends DrawableObject {
 
   resolveImageIndex()
     {
-        if (this.collectedBottles == 5) {
+        if (this.collectedBottles > 5) {
+            return 5;
+        } else if (this.collectedBottles == 5) {
             return 5;
         } else if (this.collectedBottles == 4) {
             return 4;

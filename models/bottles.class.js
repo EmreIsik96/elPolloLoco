@@ -10,7 +10,7 @@ class Bottles extends MovableObject{
     
     constructor(){
         super().loadImages(this.IMAGES_BOTTLE_ON_THE_GROUND);
-        this.x = 200 + Math.random() * 720 * 5; // Zufällige X-Koordinate
+        this.x = 100 + Math.random() * 720 * 5; // Zufällige X-Koordinate
         this.y = 360 + Math.random();     // Zufällige Y-Koordinate
 
         let randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLE_ON_THE_GROUND.length); // 
