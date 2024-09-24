@@ -23,6 +23,7 @@ class Chicken extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (charIsDead) return;
       if (!this.isDead) {
         this.moveLeft();
       }
@@ -49,6 +50,7 @@ class Chicken extends MovableObject {
    this.isDead = true;
    this.speed = 0;
    this.loadImage(this.dyingEnemy);
+   this.soundCollection.sounds.hitEnemySound.pause();
   }
 
   

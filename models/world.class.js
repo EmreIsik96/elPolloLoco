@@ -13,10 +13,7 @@ class World {
   collectedCoin = 0;
   collectedBottles = 0;
   bottles = [];
-  coinCollectSound = new Audio("audio/coin-collect.mp3");
-  hitAndDieEnemySound = new Audio("audio/boss-sound.mp3");
-  hurtCharacter = new Audio("audio/char_hurt.mp3");
-  collectBottleSound = new Audio('audio/collect_bottle.mp3')
+  soundCollection = new SoundCollection();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -37,6 +34,7 @@ class World {
       this.checkThrowObjects();
     }, 180);
     setInterval(() => {
+      if(charIsDead) return;
       this.checkCollisonWithChicken();
       this.checkCollisonWithEndboss();
     }, 280);
@@ -46,7 +44,6 @@ class World {
     setInterval(() => {
       this.checkCollisonWithBottle();
       this.checkCollisonWithCoin();
-      // this.checkCollisonWithChickenOnJumpKillChicken();
     }, 20);
   }
 
@@ -57,7 +54,6 @@ class World {
     this.checkCollisonWithBottle();
     this.checkCollisonChickenWithBottle();
     this.checkCollisonBossWithBottle();
-    // this.checkCollisonWithChickenOnJumpKillChicken();
   }
 
   checkThrowObjects() {
@@ -91,23 +87,10 @@ class World {
         if (enemy.isDead) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
-        this.hurtCharacter.play();
+        this.soundCollection.sounds.hurtCharacter.play();
       }
     });
   }
-
-  // checkCollisonWithChickenOnJumpKillChicken() {
-  //   level1.chicken.forEach((enemy) => {
-     
-  //     if (this.character.isColliding(enemy) && this.character.speedY <= 0 && this.character.isAboveGround) {
-  //       console.log(this.character.speedY);
-
-  //       if (enemy.isDead) return;
-  //       enemy.dieEnemy();
-  //       this.hitAndDieEnemySound.play();
-  //     }
-  //   });
-  // }
 
   checkCollisonWithEndboss() {
     level1.endboss.forEach((enemy) => {
@@ -115,6 +98,7 @@ class World {
         if (enemy.isDead) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
+        this.soundCollection.sounds.hurtCharacter.play();
       }
     });
   }
@@ -122,7 +106,7 @@ class World {
   checkCollisonWithCoin() {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
-        this.coinCollectSound.play();
+        this.soundCollection.sounds.coinCollectSound.play();
         this.coins.splice(i, 1); // Münze aus dem Array entfernen
         this.collectedCoin++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
@@ -136,7 +120,7 @@ class World {
         this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
-        this.collectBottleSound.play();
+        this.soundCollection.sounds.collectBottleSound.play();
       }
     });
   }
@@ -146,7 +130,7 @@ class World {
       level1.chicken.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           enemy.hitEnemy();
-          this.hitAndDieEnemySound.play();
+          this.soundCollection.sounds.hitEnemySound.play();
         }
       });
     });
@@ -157,7 +141,7 @@ class World {
       level1.endboss.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           enemy.hitEnemy();
-          this.hitAndDieEnemySound.play();
+          this.soundCollection.sounds.hitEnemySound.play();
         }
       });
     });

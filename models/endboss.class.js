@@ -56,6 +56,7 @@ class Endboss extends MovableObject {
 
   animate() {
     setInterval(() => {
+      if (charIsDead) return;
       if (!this.isDead) {
         this.moveLeft();
       }

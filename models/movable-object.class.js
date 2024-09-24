@@ -74,6 +74,8 @@ class MovableObject extends DrawableObject{
 
   isDead()
   {
-    return this.energy == 0;
+    if (this.energy == 0) {
+      gameOver();
+    }
   }
 }
