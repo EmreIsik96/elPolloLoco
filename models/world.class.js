@@ -128,7 +128,7 @@ class World {
   checkCollisonChickenWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
       level1.chicken.forEach((enemy) => {
-        if (bottle.isColliding(enemy)) {
+        if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
           this.soundCollection.sounds.hitEnemySound.play();
         }

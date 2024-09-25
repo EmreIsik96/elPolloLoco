@@ -40,8 +40,9 @@ class Chicken extends MovableObject {
     if (this.isDead) return;
 
     this.hitCount++;
-    console.log(this.hitCount);
+
     if (this.hitCount >= this.maxHits) {
+      this.isDead = true;
       this.dieEnemy();
     }
   }
@@ -50,7 +51,6 @@ class Chicken extends MovableObject {
    this.isDead = true;
    this.speed = 0;
    this.loadImage(this.dyingEnemy);
-   this.soundCollection.sounds.hitEnemySound.pause();
   }
 
   

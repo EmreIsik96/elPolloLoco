@@ -47,3 +47,8 @@ h1
     border: 3px solid rgb(184, 97, 39);
     border-radius: 12px;
 }
+.instructionsContainer{
+    display: flex;
+    gap: 50px;
+    font-size: 24px;
+}

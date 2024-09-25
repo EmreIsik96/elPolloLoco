@@ -44,6 +44,13 @@
     <div id="game-container" style="display:none;">
     <canvas id="canvas" width="720" height="480">
     </div>
+
+    <div class="instructionsContainer">
+        <h3>(<-)  Left</h3>
+        <h3>(->)  Right</h3>
+        <h3>(Space)  Jump</h3>
+        <h3>(F)  ThrowBottle</h3>
+    </div>
     
     <script>
         let soundCollection = new SoundCollection();
@@ -54,11 +61,20 @@
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.play();
+            setTimeout(()=>
+            {
             initLevel(); 
             init();
+            }, 1000);
+            
+        }
+
+        function clearAllIntervals() {
+            for (let i = 1; i < 9999; i++) window.clearInterval(i);
         }
 
         function gameOver() {
+            clearAllIntervals();
             charIsDead = true;
             soundCollection.sounds.gameOverAudio.play();
             soundCollection.sounds.startGameAudio.pause();
@@ -68,13 +84,10 @@
 
         function restartGame() {
             charIsDead = false;
-            world.character.energy = 100;
-            console.log("Energie zurückgesetzt auf: " + world.character.energy);
             document.getElementById('gameOver-screen').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.currentTime = 0;
             soundCollection.sounds.startGameAudio.play(); // Spielsound neu starten
-           
             initLevel();
             init();
         }

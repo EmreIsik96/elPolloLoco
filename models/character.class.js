@@ -72,7 +72,7 @@ class Character extends MovableObject {
         this.world.soundCollection.sounds.walking_sound.play();
         this.otherDirection = true;
       }
-      if (this.world.keyboard.UP) {
+      if (this.world.keyboard.SPACE) {
         if (this.y > 230) {
           this.jump();
           this.world.soundCollection.sounds.jumping_sound.play();
@@ -99,7 +99,7 @@ class Character extends MovableObject {
       if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
         this.playAnimate(this.IMAGES_WALKING);
       }
-      if (this.world.keyboard.UP) {
+      if (this.world.keyboard.SPACE) {
         this.playAnimate(this.IMAGES_JUMPING);
       }
       }

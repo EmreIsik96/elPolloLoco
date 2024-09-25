@@ -3,6 +3,8 @@ class Endboss extends MovableObject {
   width = 250;
   y = 105;
   hitCount = 0;
+  minX= 720 * 4.5;
+  maxX= 720 * 5.5;
   maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -58,7 +60,7 @@ class Endboss extends MovableObject {
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
-        this.moveLeft();
+        this.moveEndboss();
       }
     }, 1000 / 60);
 
@@ -67,6 +69,35 @@ class Endboss extends MovableObject {
         this.playAnimate(this.IMAGES_WALKING);
       }
     }, 200);
+  }
+
+  moveEndboss() {
+    setTimeout(() => {
+      if (this.x <= this.minX) {
+        this.otherDirection = true;  // Wenn die linke Grenze erreicht ist, dreht der Boss um
+      } 
+      else if (this.x >= this.maxX) {
+        this.otherDirection = false;  // Wenn die rechte Grenze erreicht ist, dreht der Boss um
+      }
+    
+      if (this.otherDirection) {
+        this.moveForward();  // Der Endboss bewegt sich nach links
+      } else {
+        this.moveBackward();  // Der Endboss bewegt sich nach rechts
+      }
+    }, 25000)
+    
+  }
+  
+
+  moveForward() {
+    this.speed = Math.random() * 7;
+    this.x += this.speed;
+  }
+
+  moveBackward() {
+    this.speed = Math.random() * 100;
+    this.x -= this.speed;
   }
 
   hitEnemy() {
