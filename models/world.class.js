@@ -12,6 +12,7 @@ class World {
   coins = [];
   collectedCoin = 0;
   collectedBottles = 0;
+  maxCollectedBottles = 5;
   bottles = [];
   soundCollection = new SoundCollection();
 
@@ -19,8 +20,8 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.addCoins(5); // Erstelle 5 zufällige Coins (oder beliebige Anzahl)
-    this.addBottles(10); // Erstelle 5 zufällige Bottles (oder beliebige Anzahl)
+    this.addCoins(5); // Erstelle 5 zufällige Coins
+    this.addBottles(10); // Erstelle 10 zufällige Bottles 
     this.draw();
     this.setWorld();
     this.run();
@@ -80,7 +81,7 @@ class World {
 
   addBottles(amountOfBottles) {
     for (let i = 0; i < amountOfBottles; i++) {
-      this.bottles.push(new Bottles()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
+      this.bottles.push(new Bottles()); // Erstelle einen neuen bottle und füge ihn zum Array hinzu
     }
   }
 
@@ -129,7 +130,7 @@ class World {
 
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
-      if (this.character.isColliding(bottle)) {
+      if (this.character.isColliding(bottle) && this.collectedBottles < this.maxCollectedBottles) {
         this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);

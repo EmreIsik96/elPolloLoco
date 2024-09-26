@@ -52,3 +52,32 @@ h1
     gap: 50px;
     font-size: 24px;
 }
+
+@media (max-width: 1629px){
+    .start-button{
+        bottom: 23%;
+    }
+}
+
+@media only screen and (max-width: 720px){
+    canvas {
+        width: 100%;
+        border: none;
+    }
+    .start-image,.endscreen-image{
+        border: none;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas {
+        height: 100vh;
+        border: none;
+    }
+    h1, .instructionsContainer{
+        display: none;
+    }
+    .start-image,.endscreen-image{
+        border: none;
+    }
+}
