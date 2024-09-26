@@ -55,6 +55,12 @@ class MovableObject extends DrawableObject{
            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
   }
 
+  charHitEnemy(mo)
+  {
+    return this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+           this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+  }
+
   hit()
   {
     this.energy -= 20;

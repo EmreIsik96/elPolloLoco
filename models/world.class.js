@@ -35,9 +35,12 @@ class World {
     }, 180);
     setInterval(() => {
       if(charIsDead) return;
-      this.checkCollisonWithChicken();
       this.checkCollisonWithEndboss();
     }, 280);
+    setInterval(() => {
+      if(charIsDead) return;
+      this.checkCollisonWithChicken();
+    }, 100);
     setInterval(() => {
       this.checkCollisonChickenWithBottle();
     }, 280);
@@ -83,14 +86,24 @@ class World {
 
   checkCollisonWithChicken() {
     level1.chicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        if (enemy.isDead) return;
-        this.character.hit();
-        this.statusBar[0].setPercentageHealth(this.character.energy);
-        this.soundCollection.sounds.hurtCharacter.play();
-      }
+        if (this.character.isColliding(enemy)) {
+            if (enemy.isDead) return;  // Gegner ist bereits tot, keine Aktion mehr nötig
+            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
+              this.character.speedY <= 0) {    
+                enemy.isDead = true;
+                enemy.dieEnemy();
+                this.character.speedY = 10;  // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+                this.soundCollection.sounds.hitEnemySound.play();
+            } else {
+                // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
+                this.character.hit();
+                this.statusBar[0].setPercentageHealth(this.character.energy);
+                this.soundCollection.sounds.hurtCharacter.play();
+            }
+        }
     });
-  }
+}
+
 
   checkCollisonWithEndboss() {
     level1.endboss.forEach((enemy) => {
