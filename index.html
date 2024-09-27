@@ -33,19 +33,31 @@
     
     <div id="start-screen" class="startContainer">
         <img class="start-image" src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="Start Image" id="start-image">
-        <button class="start-button" onclick="startGame()">Start</button>
+        <div class="buttonContainer">
+            <button class="instructionButton" onclick="instructions()">Instructions</button>
+            <button class="startButton" onclick="startGame()">Start</button>
+            <button class="imprintButton" onclick="imprint()">Imprint</button>
+        </div>        
+        
     </div>
 
     <div style="display: none;" id="gameOver-screen" class="GameOverContainer">
         <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="Win Image" id="win-image">
-        <button class="start-button" onclick="restartGame()">Play Again</button>
+        
+        <div class="RestartButtonContainer">
+            <button class="restartButton" onclick="restartGame()">Play Again</button>
+        </div> 
+    </div>
+
+    <div id="rotateDevice" class="rotateDeviceContainer d-none">
+        <h2>Please rotate your device</h2>
     </div>
 
     <div class="canvasContainer" id="game-container" style="display:none;">
     <canvas id="canvas" width="720" height="480">
     </div>
 
-    <div class="instructionsContainer">
+    <div id="instructionsID" class="instructionsContainer">
         <h3>(<-)  Left</h3>
         <h3>(->)  Right</h3>
         <h3>(Space)  Jump</h3>
