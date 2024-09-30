@@ -38,7 +38,26 @@
             <button class="startButton" onclick="startGame()">Start</button>
             <button class="imprintButton" onclick="imprint()">Imprint</button>
         </div>        
-        
+    </div>
+
+    <div class="hud d-none">
+        <div class="panel1">
+            <div class="panelForWalk">
+                <img class="left_btn" id="left_btn" src="./img/handy_btns/left.png" alt="left_button">
+                <img class="right_btn" id="right_btn" src="./img/handy_btns/right.png" alt="right_button">
+            </div>
+            <div class="panelForJumpAndThrow">
+                <img class="jump_btn" id="up_btn"  src="./img/handy_btns/up.png" alt="jump">
+                <img class="throw_btn" id="throw" src="./img/handy_btns/throw.png" alt="throw">
+            </div>
+                
+        </div>
+        <div class="panel2">
+           <img onclick="startGame()" src="./img/handy_btns/play-button.png" alt="play">
+           <img src="./img/handy_btns/sound.png" alt="sound">
+           <img class="mute_btn" src="./img/handy_btns/mute.png" alt="mute">
+        </div>
+
     </div>
 
     <div style="display: none;" id="gameOver-screen" class="GameOverContainer">
@@ -74,7 +93,7 @@
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.play();
             setTimeout(()=>
-            {
+            { 
             initLevel(); 
             init();
             }, 1000);
@@ -100,8 +119,8 @@
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.currentTime = 0;
             soundCollection.sounds.startGameAudio.play(); // Spielsound neu starten
-            initLevel();
             init();
+            initLevel();
         }
         
     </script>
