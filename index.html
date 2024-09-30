@@ -29,18 +29,56 @@
 </head>
 
 <body>
-    <h1>El pollo loco</h1>
     
-    <div id="start-screen" class="startContainer">
+<div id="fullScreenID">
+    <div class="mainContainer">
+        <h1 class="headerMain">El pollo loco</h1>
+        
+        <div id="start-screen" class="startContainer">
         <img class="start-image" src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="Start Image" id="start-image">
+        <div class="fullscreenButtonContainer">
+            <img id="fullscreenImgID" onclick="fullscreen()" class="fullscreen" src="./img/handy_btns/fullscreen.png" alt="fullscreen">
+            <img id="shrinkImgID" onclick="closeFullscreen()" style="display: none;" class="fullscreen" src="./img/handy_btns/shrink.png" alt="exitFullscreen">
+        </div>
         <div class="buttonContainer">
-            <button class="instructionButton" onclick="instructions()">Instructions</button>
-            <button class="startButton" onclick="startGame()">Start</button>
-            <button class="imprintButton" onclick="imprint()">Imprint</button>
-        </div>        
-    </div>
+            <button id="instructionButtonID" class="instructionButton" onclick="instructions()">Instructions</button>
+            <button id="startButtonID" class="startButton" onclick="startGame()">Start</button>
+            <button id="imprintButtonID" class="imprintButton" onclick="imprint()">Imprint</button>
+        </div>
+        </div>
 
-    <div class="hud d-none">
+        <div id="instructionsID" style="display: none;" class="instructionsContainer">
+        <div class="instructions">
+            <h3>(<-)  Left</h3>
+            <h3>(->)  Right</h3>
+            <h3>(Space)  Jump</h3>
+            <h3>(F)  ThrowBottle</h3>
+        </div>
+        <div class="backButtonInstructionsContainer">
+            <button id="backButtonFromIstructionsID" style="display: none;" class="backButtonInstructions" onclick="backFromInstructions()">Back</button>
+        </div>
+        </div>
+
+        <div id="imprintID" style="display:none;" class="imprintContainer">
+        <div class="imprint">
+            <h2 class="headerImprint">Impressum</h2>
+            <h3 class="generalInformation">Allgemeine Angaben</h3>
+            <span>Emre Isik<span><br>
+            <span>Musterstraße 110</span><br>
+            <span>67063 Ludwigshafen am Rhein</span><br>
+            <br>
+            <h3 class="contactTxt"><b>Kontakt</b></h3><br>
+            <span>Telefon: <a href="tel:015140089200">015140089200</a></span><br>
+            <span>Email: <a href="mailto:emre-isik@web.de">emre-isik@web.de</a></span><br>
+            <br>
+            <span>Erstellt von <a href="https://impressum-generator.info/" target="_blank">impressum-generator.info</a> - powered by <a href="https://abfindungshero.de/" target="_blank">abfindungshero.de</a><br><br></p>
+        </div>
+        <div class="backButtonImprintContainer">
+            <button id="backButtonFromImprintID" style="display: none;" class="backButtonImprint" onclick="backFromImprint()">Back</button>
+        </div>
+        </div>
+
+        <div class="hud d-none">
         <div class="panel1">
             <div class="panelForWalk">
                 <img class="left_btn" id="left_btn" src="./img/handy_btns/left.png" alt="left_button">
@@ -58,30 +96,25 @@
            <img class="mute_btn" src="./img/handy_btns/mute.png" alt="mute">
         </div>
 
-    </div>
+        </div>
 
-    <div style="display: none;" id="gameOver-screen" class="GameOverContainer">
+        <div id="gameOver-screen" style="display: none;" class="gameOverContainer">
         <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="Win Image" id="win-image">
         
-        <div class="RestartButtonContainer">
+        <div class="buttonContainer">
             <button class="restartButton" onclick="restartGame()">Play Again</button>
         </div> 
-    </div>
+        </div>
 
-    <div id="rotateDevice" class="rotateDeviceContainer d-none">
+        <div id="rotateDevice" class="rotateDeviceContainer d-none">
         <h2>Please rotate your device</h2>
-    </div>
+        </div>
 
-    <div class="canvasContainer" id="game-container" style="display:none;">
-    <canvas id="canvas" width="720" height="480">
+        <div class="canvasContainer" id="game-container" style="display:none;">
+        <canvas id="canvas" width="720" height="480">
+        </div>
     </div>
-
-    <div id="instructionsID" class="instructionsContainer">
-        <h3>(<-)  Left</h3>
-        <h3>(->)  Right</h3>
-        <h3>(Space)  Jump</h3>
-        <h3>(F)  ThrowBottle</h3>
-    </div>
+</div>  
     
     <script>
         let soundCollection = new SoundCollection();
@@ -97,7 +130,73 @@
             initLevel(); 
             init();
             }, 1000);
-            
+        }
+       
+        function fullscreen(){
+            let fullscreen = document.getElementById('fullScreenID');
+            enterFullscreen(fullscreen);
+        }
+
+        function closeFullscreen(){
+            document.getElementById('fullscreenImgID').style.display = 'block';
+            document.getElementById('shrinkImgID').style.display = 'none';
+            exitFullscreen();
+        }
+
+        function enterFullscreen(element) {
+            if(element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+                element.msRequestFullscreen();
+            } else if(element.webkitRequestFullscreen) {  // iOS Safari
+                element.webkitRequestFullscreen();
+            }
+            document.getElementById('fullscreenImgID').style.display = 'none';
+            document.getElementById('shrinkImgID').style.display = 'block';
+        }
+
+        function exitFullscreen() {           
+            if(document.exitFullscreen) {
+                document.exitFullscreen();   
+            } else if(document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+
+        function instructions(){
+            document.getElementById('start-image').style.display = 'none';
+            document.getElementById('instructionsID').style.display = 'block';
+            document.getElementById('instructionButtonID').style.display = 'none';
+            document.getElementById('startButtonID').style.display = 'none';
+            document.getElementById('imprintButtonID').style.display = 'none';
+            document.getElementById('backButtonFromIstructionsID').style.display = 'block';
+        }
+
+        function backFromInstructions(){
+            document.getElementById('start-image').style.display = 'block';
+            document.getElementById('instructionsID').style.display = 'none';
+            document.getElementById('instructionButtonID').style.display = 'block';
+            document.getElementById('startButtonID').style.display = 'block';
+            document.getElementById('imprintButtonID').style.display = 'block';
+            document.getElementById('backButtonFromIstructionsID').style.display = 'none';
+        }
+
+        function imprint(){
+            document.getElementById('start-image').style.display = 'none';
+            document.getElementById('imprintID').style.display = 'block';
+            document.getElementById('instructionButtonID').style.display = 'none';
+            document.getElementById('startButtonID').style.display = 'none';
+            document.getElementById('imprintButtonID').style.display = 'none';
+            document.getElementById('backButtonFromImprintID').style.display = 'block';
+        }
+
+        function backFromImprint(){
+            document.getElementById('start-image').style.display = 'block';
+            document.getElementById('imprintID').style.display = 'none';
+            document.getElementById('instructionButtonID').style.display = 'block';
+            document.getElementById('startButtonID').style.display = 'block';
+            document.getElementById('imprintButtonID').style.display = 'block';
+            document.getElementById('backButtonFromIstructionsID').style.display = 'none';
         }
 
         function clearAllIntervals() {

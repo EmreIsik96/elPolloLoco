@@ -66,7 +66,6 @@ class Keyboard {
       .addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.LEFT = true;
-        console.log("Left button pressed");
       });
     document
       .getElementById("left_btn")
