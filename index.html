@@ -29,7 +29,6 @@
 </head>
 
 <body>
-    
 <div id="fullScreenID">
     <div class="mainContainer">
         <h1 class="headerMain">El pollo loco</h1>
@@ -46,6 +45,10 @@
             <button id="imprintButtonID" class="imprintButton" onclick="imprint()">Imprint</button>
         </div>
         </div>
+
+        <div class="canvasContainer" id="game-container" style="display:none;">
+            <canvas id="canvas" width="720" height="480">
+            </div>
 
         <div id="instructionsID" style="display: none;" class="instructionsContainer">
         <div class="instructions">
@@ -98,24 +101,20 @@
 
         </div>
 
-        <div id="gameOver-screen" style="display: none;" class="gameOverContainer">
-        <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="Win Image" id="win-image">
-        
-        <div class="buttonContainer">
-            <button class="restartButton" onclick="restartGame()">Play Again</button>
-        </div> 
-        </div>
-
         <div id="rotateDevice" class="rotateDeviceContainer d-none">
         <h2>Please rotate your device</h2>
         </div>
 
-        <div class="canvasContainer" id="game-container" style="display:none;">
-        <canvas id="canvas" width="720" height="480">
-        </div>
+        <div id="gameOver-screen" style="display: none;" class="gameOverContainer">
+            <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="Win Image" id="win-image">
+            
+            <div class="gameOverButtonContainer">
+                <button class="restartButton" onclick="restartGame()">Play Again</button>
+            </div> 
+            </div>
     </div>
-</div>  
-    
+</div>
+
     <script>
         let soundCollection = new SoundCollection();
         let charIsDead = false;
@@ -137,22 +136,22 @@
             enterFullscreen(fullscreen);
         }
 
-        function closeFullscreen(){
-            document.getElementById('fullscreenImgID').style.display = 'block';
-            document.getElementById('shrinkImgID').style.display = 'none';
-            exitFullscreen();
-        }
-
         function enterFullscreen(element) {
             if(element.requestFullscreen) {
                 element.requestFullscreen();
-            } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+            } else if(element.msRequestFullscreen) {  
                 element.msRequestFullscreen();
-            } else if(element.webkitRequestFullscreen) {  // iOS Safari
+            } else if(element.webkitRequestFullscreen) { 
                 element.webkitRequestFullscreen();
             }
             document.getElementById('fullscreenImgID').style.display = 'none';
             document.getElementById('shrinkImgID').style.display = 'block';
+        }
+
+        function closeFullscreen(){
+            document.getElementById('fullscreenImgID').style.display = 'block';
+            document.getElementById('shrinkImgID').style.display = 'none';
+            exitFullscreen();
         }
 
         function exitFullscreen() {           
@@ -161,6 +160,7 @@
             } else if(document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
             }
+            document.getElementById('start-image').style.width="";
         }
 
         function instructions(){
@@ -218,8 +218,8 @@
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.currentTime = 0;
             soundCollection.sounds.startGameAudio.play(); // Spielsound neu starten
-            init();
             initLevel();
+            init();
         }
         
     </script>
