@@ -29,16 +29,11 @@
 </head>
 
 <body>
-<div id="fullScreenID">
     <div class="mainContainer">
         <h1 class="headerMain">El pollo loco</h1>
         
         <div id="start-screen" class="startContainer">
         <img class="start-image" src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="Start Image" id="start-image">
-        <div class="fullscreenButtonContainer">
-            <img id="fullscreenImgID" onclick="fullscreen()" class="fullscreen" src="./img/handy_btns/fullscreen.png" alt="fullscreen">
-            <img id="shrinkImgID" onclick="closeFullscreen()" style="display: none;" class="fullscreen" src="./img/handy_btns/shrink.png" alt="exitFullscreen">
-        </div>
         <div class="buttonContainer">
             <button id="instructionButtonID" class="instructionButton" onclick="instructions()">Instructions</button>
             <button id="startButtonID" class="startButton" onclick="startGame()">Start</button>
@@ -47,8 +42,13 @@
         </div>
 
         <div class="canvasContainer" id="game-container" style="display:none;">
-            <canvas id="canvas" width="720" height="480">
-            </div>
+            <canvas id="canvas" width="720" height="480"></canvas>
+                <div class="fullscreenButtonContainer">
+                    <img src="./img/mute.png" onclick="muteSound()" class="muteButton">
+                    <img id="fullscreenImgID" onclick="fullscreen()" class="fullscreen" src="./img/handy_btns/fullscreen.png" alt="fullscreen">
+                    <!-- <img id="shrinkImgID" onclick="closeFullscreen()" style="display: none;" class="fullscreen" src="./img/handy_btns/shrink.png" alt="exitFullscreen"> -->
+                </div>   
+        </div>
 
         <div id="instructionsID" style="display: none;" class="instructionsContainer">
         <div class="instructions">
@@ -113,9 +113,8 @@
             </div> 
             </div>
     </div>
-</div>
 
-    <script>
+<script>
         let soundCollection = new SoundCollection();
         let charIsDead = false;
 
@@ -132,7 +131,7 @@
         }
        
         function fullscreen(){
-            let fullscreen = document.getElementById('fullScreenID');
+            let fullscreen = document.getElementById('canvas');
             enterFullscreen(fullscreen);
         }
 
@@ -144,8 +143,6 @@
             } else if(element.webkitRequestFullscreen) { 
                 element.webkitRequestFullscreen();
             }
-            document.getElementById('fullscreenImgID').style.display = 'none';
-            document.getElementById('shrinkImgID').style.display = 'block';
         }
 
         function closeFullscreen(){
@@ -160,7 +157,7 @@
             } else if(document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
             }
-            document.getElementById('start-image').style.width="";
+            document.getElementById('canvas').style.width="";
         }
 
         function instructions(){
@@ -220,6 +217,19 @@
             soundCollection.sounds.startGameAudio.play(); // Spielsound neu starten
             initLevel();
             init();
+        }
+        
+        function muteSound() {
+            let allSounds = soundCollection.sounds;
+            Object.values(allSounds).forEach(sound => { sound.pause(); 
+            });
+        }
+
+        function unmuteSound() {
+            let allSounds = soundCollection.sounds;
+            Object.values(allSounds).forEach(sound => {sound.play();
+
+            });
         }
         
     </script>
