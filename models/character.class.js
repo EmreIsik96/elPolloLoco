@@ -65,22 +65,21 @@ class Character extends MovableObject {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false;
-        console.log(this.isMuted);
-        if (this.isMuted == false) {
+        if (!world.isMuted) {
           this.world.soundCollection.sounds.walking_sound.play();
         }
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
-        if (this.isMuted == false) {          
+        if (!world.isMuted) {
           this.world.soundCollection.sounds.walking_sound.play();
         }
       }
       if (this.world.keyboard.SPACE) {
         if (this.y > 230) {
           this.jump();
-          if (this.isMuted == false) {
+          if (!world.isMuted) {
             this.world.soundCollection.sounds.jumping_sound.play();
           }
         }

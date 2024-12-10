@@ -14,14 +14,15 @@ class World {
   collectedBottles = 0;
   maxCollectedBottles = 5;
   bottles = [];
+  isMuted = false;
   soundCollection = new SoundCollection();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.addCoins(5); // Erstelle 5 zufällige Coins
-    this.addBottles(10); // Erstelle 10 zufällige Bottles 
+    this.addCoins(5);
+    this.addBottles(10); 
     this.draw();
     this.setWorld();
     this.run();
@@ -94,17 +95,20 @@ class World {
                 enemy.isDead = true;
                 enemy.dieEnemy();
                 this.character.speedY = 10;  // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
-                this.soundCollection.sounds.hitEnemySound.play();
+                if (!this.isMuted) {
+                  this.soundCollection.sounds.hitEnemySound.play();
+                }
             } else {
                 // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
                 this.character.hit();
                 this.statusBar[0].setPercentageHealth(this.character.energy);
+                if (!this.isMuted) {
                 this.soundCollection.sounds.hurtCharacter.play();
+                }
             }
         }
     });
-}
-
+  }
 
   checkCollisonWithEndboss() {
     level1.endboss.forEach((enemy) => {
@@ -112,7 +116,9 @@ class World {
         if (enemy.isDead) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
+        if (!this.isMuted) {
         this.soundCollection.sounds.hurtCharacter.play();
+        }
       }
     });
   }
@@ -120,7 +126,9 @@ class World {
   checkCollisonWithCoin() {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
-        this.soundCollection.sounds.coinCollectSound.play();
+        if (!this.isMuted) {
+          this.soundCollection.sounds.coinCollectSound.play();
+        }        
         this.coins.splice(i, 1); // Münze aus dem Array entfernen
         this.collectedCoin++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
@@ -134,7 +142,9 @@ class World {
         this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
-        this.soundCollection.sounds.collectBottleSound.play();
+        if (!this.isMuted) {
+          this.soundCollection.sounds.collectBottleSound.play();
+        }
       }
     });
   }
@@ -144,7 +154,10 @@ class World {
       level1.chicken.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
-          this.soundCollection.sounds.hitEnemySound.play();
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
+         
         }
       });
     });
@@ -155,7 +168,9 @@ class World {
       level1.endboss.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           enemy.hitEnemy();
-          this.soundCollection.sounds.hitEnemySound.play();
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
         }
       });
     });
@@ -209,8 +224,10 @@ class World {
     this.ctx.scale(-1, 1);
     mo.x = mo.x * -1;
   }
+
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
+  
 }

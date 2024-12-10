@@ -12,7 +12,7 @@ class SoundCollection {
 
     constructor()
     {
-        this.sounds.startGameAudio.loop = true;
+        this.sounds.startGameAudio.loop = true;        
     }
     
     

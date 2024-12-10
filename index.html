@@ -8,9 +8,9 @@
     <link rel="icon" href="./favicon/fav_icon.svg">
     <title>El Pollo Loco</title>
     <script src="./models/world.class.js"></script>
-    <script src="./models/soundCollection.object.js"></script>
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/movable-object.class.js"></script>
+    <script src="./models/soundCollection.object.js"></script>
     <script src="./models/character.class.js"></script>
     <script src="./models/chicken.class.js"></script>
     <script src="./models/endboss.class.js"></script>
@@ -117,7 +117,6 @@
 <script>
         let soundCollection = new SoundCollection();
         let charIsDead = false;
-        let isMuted = false;
 
         function startGame() {
             charIsDead = false;
@@ -204,34 +203,37 @@
         function gameOver() {
             clearAllIntervals();
             charIsDead = true;
-            soundCollection.sounds.gameOverAudio.play();
-            soundCollection.sounds.startGameAudio.pause();
+            if (!world.isMuted) {
+                soundCollection.sounds.gameOverAudio.play();
+                soundCollection.sounds.startGameAudio.pause();
+            }
             document.getElementById('game-container').style.display = 'none';
-            document.getElementById('gameOver-screen').style.display = 'block'; // Game Over Screen anzeigen
+            document.getElementById('gameOver-screen').style.display = 'block';
         }
 
         function restartGame() {
+            let isMuted = world.isMuted;
             charIsDead = false;
             document.getElementById('gameOver-screen').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.currentTime = 0;
-            soundCollection.sounds.startGameAudio.play(); // Spielsound neu starten
+            if (!world.isMuted) {
+                soundCollection.sounds.startGameAudio.play();
+            }
             initLevel();
             init();
+            world.isMuted = isMuted;
+            
         }
         
         function muteSound() {
-            isMuted = true;
-            const allSounds = soundCollection.sounds;
-            
-            Object.values(allSounds).forEach(sound => { sound.volume = 0; });
-            
-        }
-
-        function unmuteSound() {
-            let allSounds = soundCollection.sounds;
-            Object.values(allSounds).forEach(sound => { sound.play();
-            });
+             world.isMuted = !world.isMuted;
+             if (!world.isMuted) {
+                soundCollection.sounds.startGameAudio.play();
+             }else {
+                soundCollection.sounds.startGameAudio.pause();
+             }
+             
         }
         
     </script>
