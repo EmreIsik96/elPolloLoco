@@ -117,6 +117,7 @@
 <script>
         let soundCollection = new SoundCollection();
         let charIsDead = false;
+        let isMuted = false;
 
         function startGame() {
             charIsDead = false;
@@ -220,15 +221,16 @@
         }
         
         function muteSound() {
-            let allSounds = soundCollection.sounds;
-            Object.values(allSounds).forEach(sound => { sound.pause(); 
-            });
+            isMuted = true;
+            const allSounds = soundCollection.sounds;
+            
+            Object.values(allSounds).forEach(sound => { sound.volume = 0; });
+            
         }
 
         function unmuteSound() {
             let allSounds = soundCollection.sounds;
-            Object.values(allSounds).forEach(sound => {sound.play();
-
+            Object.values(allSounds).forEach(sound => { sound.play();
             });
         }
         
