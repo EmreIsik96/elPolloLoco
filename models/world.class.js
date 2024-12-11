@@ -66,7 +66,7 @@ class World {
       let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100);
       this.thorwableObjects.push(bottle);
       this.collectedBottles --;
-      this.statusBar[2].setCollectedBottles(this.collectedBottles); // Update BottleBar
+      this.statusBar[2].setCollectedBottles(this.collectedBottles);
     }
   }
 
@@ -129,7 +129,7 @@ class World {
         if (!this.isMuted) {
           this.soundCollection.sounds.coinCollectSound.play();
         }        
-        this.coins.splice(i, 1); // Münze aus dem Array entfernen
+        this.coins.splice(i, 1); 
         this.collectedCoin++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
       }
@@ -139,7 +139,7 @@ class World {
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
       if (this.character.isColliding(bottle) && this.collectedBottles < this.maxCollectedBottles) {
-        this.bottles.splice(i, 1); // Flasche aus dem Array entfernen
+        this.bottles.splice(i, 1); 
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
         if (!this.isMuted) {
