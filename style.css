@@ -334,8 +334,7 @@ span {
     bottom: 2%;
   }
   .gameOverButtonContainer {
-    margin-left: 170px;
-    
-    
+    display: flex;
+    margin-top: -250px;
   }
 }
