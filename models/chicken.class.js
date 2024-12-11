@@ -4,17 +4,18 @@ class Chicken extends MovableObject {
   y = 360;
   hitCount = 0;
   maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
-  dyingEnemy = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
-  IMAGES_WALKING = [
+  dyingNormalChicken = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
+  IMAGES_WALKING_NORMAL_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
+  
 
   constructor() {
-    super().loadImage(this.IMAGES_WALKING[0]);
-    this.loadImages(this.IMAGES_WALKING);
-    this.loadImage(this.dyingEnemy);
+    super().loadImage(this.IMAGES_WALKING_NORMAL_CHICKEN[0]);
+    this.loadImages(this.IMAGES_WALKING_NORMAL_CHICKEN);
+    this.loadImage(this.dyingNormalChicken);
     this.x = 720 + Math.random() * 720 * 5.5;
     this.speed = 0.5 + Math.random() * 0.75;
     this.isDead = false;
@@ -31,7 +32,7 @@ class Chicken extends MovableObject {
 
     setInterval(() => {
       if (!this.isDead) {
-        this.playAnimate(this.IMAGES_WALKING);
+        this.playAnimate(this.IMAGES_WALKING_NORMAL_CHICKEN);
       }
     }, 100);
   }
@@ -50,8 +51,6 @@ class Chicken extends MovableObject {
   dieEnemy() {
    this.isDead = true;
    this.speed = 0;
-   this.loadImage(this.dyingEnemy);
+   this.loadImage(this.dyingNormalChicken);
   }
-
-  
 }

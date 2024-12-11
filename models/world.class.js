@@ -44,7 +44,14 @@ class World {
       this.checkCollisonWithChicken();
     }, 100);
     setInterval(() => {
+      if(charIsDead) return;
+      this.checkCollisonWithSmallChicken();
+    }, 100);
+    setInterval(() => {
       this.checkCollisonChickenWithBottle();
+    }, 280);
+    setInterval(() => {
+      this.checkCollisonSmallChickenWithBottle();
     }, 280);
     setInterval(() => {
       this.checkCollisonWithBottle();
@@ -55,9 +62,11 @@ class World {
   checkCollisions() {
     this.checkCollisonWithCoin();
     this.checkCollisonWithChicken();
+    this.checkCollisonWithSmallChicken();
     this.checkCollisonWithEndboss();
     this.checkCollisonWithBottle();
     this.checkCollisonChickenWithBottle();
+    this.checkCollisonSmallChickenWithBottle();
     this.checkCollisonBossWithBottle();
   }
 
@@ -88,6 +97,30 @@ class World {
 
   checkCollisonWithChicken() {
     level1.chicken.forEach((enemy) => {
+        if (this.character.isColliding(enemy)) {
+            if (enemy.isDead) return;  // Gegner ist bereits tot, keine Aktion mehr nötig
+            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
+              this.character.speedY <= 0) {    
+                enemy.isDead = true;
+                enemy.dieEnemy();
+                this.character.speedY = 10;  // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+                if (!this.isMuted) {
+                  this.soundCollection.sounds.hitEnemySound.play();
+                }
+            } else {
+                // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
+                this.character.hit();
+                this.statusBar[0].setPercentageHealth(this.character.energy);
+                if (!this.isMuted) {
+                this.soundCollection.sounds.hurtCharacter.play();
+                }
+            }
+        }
+    });
+  }
+
+  checkCollisonWithSmallChicken() {
+    level1.smallChicken.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
             if (enemy.isDead) return;  // Gegner ist bereits tot, keine Aktion mehr nötig
             if (this.character.y + this.character.height <= enemy.y + enemy.height &&
@@ -163,6 +196,19 @@ class World {
     });
   }
 
+  checkCollisonSmallChickenWithBottle() {
+    this.thorwableObjects.forEach((bottle) => {
+      level1.smallChicken.forEach((enemy) => {
+        if (bottle.isColliding(enemy) && !enemy.isDead) {
+          enemy.hitEnemy();
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
+        }
+      });
+    });
+  }
+
   checkCollisonBossWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
       level1.endboss.forEach((enemy) => {
@@ -187,6 +233,7 @@ class World {
 
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.chicken);
+    this.addObjectsToMap(this.level.smallChicken);
     this.addObjectsToMap(this.level.endboss);
     this.addObjectsToMap(this.thorwableObjects);
     this.addObjectsToMap(this.coins);
