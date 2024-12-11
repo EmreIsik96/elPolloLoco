@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
   hitCount = 0;
   minX = 720 * 4.5;
   maxX = 720 * 5.5;
-  maxHits = 6;
+  maxHits = 5;
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
