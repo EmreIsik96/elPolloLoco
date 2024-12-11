@@ -74,9 +74,9 @@ class Endboss extends MovableObject {
   moveEndboss() {
     setTimeout(() => {
       if (this.x <= this.minX) {
-        this.otherDirection = true; // Wenn die linke Grenze erreicht ist, dreht der Boss um
+        this.otherDirection = true;
       } else if (this.x >= this.maxX) {
-        this.otherDirection = false; // Wenn die rechte Grenze erreicht ist, dreht der Boss um
+        this.otherDirection = false;
       }
 
       if (this.otherDirection) {
@@ -124,15 +124,13 @@ class Endboss extends MovableObject {
     this.isDead = true;
     let currentImageIndex = 0;
 
-    let interval = setInterval(() => {
-      // erstelle eine Variable, um den Interval später abzurufen und abzubrechen
-
+    let interval = setInterval(() => { // erstelle eine Variable, um den Interval später abzurufen und abzubrechen 
+      
       this.loadImage(this.IMAGES_DEAD[currentImageIndex]); // Es wird immer 1 Bild nacheinander abgerufen, da bei jedem durchlauf CurrentImageIndex um 1 erhöht wird.
       currentImageIndex++; // CurrentImage wird mit jeden durchgang um 1 erhöht.
 
       // Stoppen der Animation, wenn alle Bilder durch sind
-      if (currentImageIndex >= this.IMAGES_DEAD.length) {
-        // vergleichen von CurrentImageIndex und Array.length bis der currentImageIndex die length des Arrays erreicht
+      if (currentImageIndex >= this.IMAGES_DEAD.length) { // vergleichen von CurrentImageIndex und Array.length bis der currentImageIndex die length des Arrays erreicht
         clearInterval(interval); // Animation stoppen
       }
     }, 200); // Zeitintervall zwischen den Bildern
