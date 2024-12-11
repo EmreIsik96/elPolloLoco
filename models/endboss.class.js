@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
   hitCount = 0;
   minX = 720 * 4.5;
   maxX = 720 * 5.5;
-  maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
+  maxHits = 6;
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -49,7 +49,7 @@ class Endboss extends MovableObject {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
-    this.loadImages(this.IMAGES_DEAD);
+    this.loadImages(this.IMAGES_DEAD);  
     this.speed = 1;
     this.x = 720 * 5.5;
     this.isDead = false;
@@ -125,7 +125,7 @@ class Endboss extends MovableObject {
     let currentImageIndex = 0;
 
     let interval = setInterval(() => { // erstelle eine Variable, um den Interval später abzurufen und abzubrechen 
-      
+
       this.loadImage(this.IMAGES_DEAD[currentImageIndex]); // Es wird immer 1 Bild nacheinander abgerufen, da bei jedem durchlauf CurrentImageIndex um 1 erhöht wird.
       currentImageIndex++; // CurrentImage wird mit jeden durchgang um 1 erhöht.
 

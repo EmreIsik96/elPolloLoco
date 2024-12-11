@@ -236,6 +236,7 @@
             let isMuted = world.isMuted;
             charIsDead = false;
             document.getElementById('gameOver-screen').style.display = 'none';
+            document.getElementById('winScreen').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             soundCollection.sounds.startGameAudio.currentTime = 0;
             if (!world.isMuted) {
