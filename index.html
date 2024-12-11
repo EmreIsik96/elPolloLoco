@@ -107,17 +107,26 @@
         </div>
 
         <div id="gameOver-screen" style="display: none;" class="gameOverContainer">
-            <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="Win Image" id="win-image">
+            <img class="endscreen-image" src="img/9_intro_outro_screens/game_over/game over.png" alt="GameOverScreen" id="endscreen-image">
             
             <div class="gameOverButtonContainer">
                 <button class="restartButton" onclick="restartGame()">Play Again</button>
             </div> 
-            </div>
+        </div>
+
+        <div id="winScreen" style="display: none;" class="winContainer">
+            <img class="win-image" src="img/9_intro_outro_screens/win/win_2.png" alt="Win Image" id="win-image">
+            
+            <div class="gameOverButtonContainer">
+                <button class="restartButton" onclick="restartGame()">Play Again</button>
+            </div> 
+        </div>
     </div>
 
 <script>
         let soundCollection = new SoundCollection();
         let charIsDead = false;
+        let bossIsDead = false;
 
         function startGame() {
             charIsDead = false;
@@ -213,7 +222,14 @@
         }
 
         function winGame() {
-
+            clearAllIntervals();
+            bossIsDead = true;
+            if (!world.isMuted) {
+                soundCollection.sounds.gameOverAudio.play();
+                soundCollection.sounds.startGameAudio.pause();
+            }
+            document.getElementById('winScreen').style.display = 'block';
+            document.getElementById('game-container').style.display = 'none';
         }
 
         function restartGame() {

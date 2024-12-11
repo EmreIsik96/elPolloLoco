@@ -3,8 +3,8 @@ class Endboss extends MovableObject {
   width = 250;
   y = 105;
   hitCount = 0;
-  minX= 720 * 4.5;
-  maxX= 720 * 5.5;
+  minX = 720 * 4.5;
+  maxX = 720 * 5.5;
   maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -74,21 +74,18 @@ class Endboss extends MovableObject {
   moveEndboss() {
     setTimeout(() => {
       if (this.x <= this.minX) {
-        this.otherDirection = true;  // Wenn die linke Grenze erreicht ist, dreht der Boss um
-      } 
-      else if (this.x >= this.maxX) {
-        this.otherDirection = false;  // Wenn die rechte Grenze erreicht ist, dreht der Boss um
+        this.otherDirection = true; // Wenn die linke Grenze erreicht ist, dreht der Boss um
+      } else if (this.x >= this.maxX) {
+        this.otherDirection = false; // Wenn die rechte Grenze erreicht ist, dreht der Boss um
       }
-    
+
       if (this.otherDirection) {
-        this.moveForward();  // Der Endboss bewegt sich nach links
+        this.moveForward();
       } else {
-        this.moveBackward();  // Der Endboss bewegt sich nach rechts
+        this.moveBackward();
       }
-    }, 25000)
-    
+    }, 7000);
   }
-  
 
   moveForward() {
     this.speed = Math.random() * 7;
@@ -96,17 +93,17 @@ class Endboss extends MovableObject {
   }
 
   moveBackward() {
-    this.speed = Math.random() * 100;
+    this.speed = Math.random() * 15;
     this.x -= this.speed;
   }
 
   hitEnemy() {
-    if (this.isDead) return; // Wenn der Boss bereits tot ist, nicht reagieren
+    if (this.isDead) return;
     this.hitCount++;
     let currentImageIndex = 0;
 
     let interval = setInterval(() => {
-      this.loadImage(this.IMAGES_HURT[currentImageIndex]); // Zeige die Verletzungsanimation
+      this.loadImage(this.IMAGES_HURT[currentImageIndex]);
       currentImageIndex++;
 
       if (currentImageIndex >= this.IMAGES_HURT.length) {
@@ -116,6 +113,9 @@ class Endboss extends MovableObject {
 
     if (this.hitCount >= this.maxHits) {
       this.dieEnemy();
+      setTimeout(() => {
+        winGame();
+      }, 1000);
     }
   }
 
@@ -126,6 +126,7 @@ class Endboss extends MovableObject {
 
     let interval = setInterval(() => {
       // erstelle eine Variable, um den Interval später abzurufen und abzubrechen
+
       this.loadImage(this.IMAGES_DEAD[currentImageIndex]); // Es wird immer 1 Bild nacheinander abgerufen, da bei jedem durchlauf CurrentImageIndex um 1 erhöht wird.
       currentImageIndex++; // CurrentImage wird mit jeden durchgang um 1 erhöht.
 

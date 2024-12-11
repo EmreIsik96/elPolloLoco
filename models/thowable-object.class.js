@@ -18,15 +18,15 @@ class ThorwableObject extends MovableObject {
 
   trow() {
     let characterDirection = world.character.otherDirection;
-    this.speedY = 15;
+    this.speedY = 10;
     this.applyGravity();
     if (!characterDirection) {
       setInterval(() => {
-        this.x += 5;
+        this.x += 6;
       }, 20);
     } else {
       setInterval(() => {
-        this.x -= 5;
+        this.x -= 6;
       }, 20);
     }
     setInterval(() => {
