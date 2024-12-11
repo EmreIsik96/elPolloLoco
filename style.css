@@ -333,4 +333,9 @@ span {
   .startButtonContainer {
     bottom: 2%;
   }
+  .gameOverButtonContainer {
+    margin-left: 170px;
+    
+    
+  }
 }
