@@ -96,8 +96,8 @@
         </div>
         <div class="panel2">
            <img onclick="startGame()" src="./img/handy_btns/play-button.png" alt="play">
-           <img src="./img/handy_btns/sound.png" alt="sound">
-           <img class="mute_btn" src="./img/handy_btns/mute.png" alt="mute">
+           <img onclick="muteSound()" src="./img/handy_btns/sound.png" class="mute_btn d-none" id="sound">
+           <img onclick="muteSound()" class="mute_btn" src="./img/handy_btns/mute.png" id="mute" alt="mute">
         </div>
 
         </div>
@@ -254,7 +254,8 @@
              }else {
                 soundCollection.sounds.startGameAudio.pause();
              }
-             
+             document.getElementById('sound').classList.toggle('d-none')
+             document.getElementById('mute').classList.toggle('d-none')
         }
         
     </script>
