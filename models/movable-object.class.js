@@ -28,7 +28,8 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  playAnimate(images) {  // lässt die Bilder im Cache anzeigen
+  playAnimate(images) {
+    // lässt die Bilder im Cache anzeigen
     let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
@@ -81,6 +82,34 @@ class MovableObject extends DrawableObject {
   isDead() {
     if (this.energy == 0) {
       gameOver();
+    }
+  }
+
+  charWalking() {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      this.moveRight();
+      this.otherDirection = false;
+      if (!world.isMuted) {
+        this.world.soundCollection.sounds.walking_sound.play();
+      }
+    }
+    if (this.world.keyboard.LEFT && this.x > 0) {
+      this.moveLeft();
+      this.otherDirection = true;
+      if (!world.isMuted) {
+        this.world.soundCollection.sounds.walking_sound.play();
+      }
+    }
+  }
+
+  charJumping() {
+    if (this.world.keyboard.SPACE) {
+      if (this.y > 230) {
+        this.jump();
+        if (!world.isMuted) {
+          this.world.soundCollection.sounds.jumping_sound.play();
+        }
+      }
     }
   }
 }

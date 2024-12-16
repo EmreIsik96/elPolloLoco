@@ -1,5 +1,6 @@
 class World {
   character = new Character();
+  endboss = new Endboss();
   bottle = new Bottles();
   level = level1;
   canvas;
@@ -7,7 +8,12 @@ class World {
   keyboard;
   world;
   camera_x = 0;
-  statusBar = [new HealthBar(), new CoinBar(), new BottleBar()];
+  statusBar = [
+    new HealthBar(),
+    new CoinBar(),
+    new BottleBar(),
+    new EndbossBar(),
+  ];
   thorwableObjects = [];
   coins = [];
   collectedCoin = 0;
@@ -22,7 +28,7 @@ class World {
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.addCoins(5);
-    this.addBottles(10); 
+    this.addBottles(10);
     this.draw();
     this.setWorld();
     this.run();
@@ -36,15 +42,15 @@ class World {
       this.checkThrowObjects();
     }, 180);
     setInterval(() => {
-      if(charIsDead) return;
+      if (charIsDead) return;
       this.checkCollisonWithEndboss();
     }, 280);
     setInterval(() => {
-      if(charIsDead) return;
+      if (charIsDead) return;
       this.checkCollisonWithChicken();
     }, 100);
     setInterval(() => {
-      if(charIsDead) return;
+      if (charIsDead) return;
       this.checkCollisonWithSmallChicken();
     }, 100);
     setInterval(() => {
@@ -72,9 +78,12 @@ class World {
 
   checkThrowObjects() {
     if (this.keyboard.F && this.collectedBottles > 0) {
-      let bottle = new ThorwableObject(this.character.x + 50, this.character.y + 100);
+      let bottle = new ThorwableObject(
+        this.character.x + 50,
+        this.character.y + 100
+      );
       this.thorwableObjects.push(bottle);
-      this.collectedBottles --;
+      this.collectedBottles--;
       this.statusBar[2].setCollectedBottles(this.collectedBottles);
     }
   }
@@ -97,49 +106,53 @@ class World {
 
   checkCollisonWithChicken() {
     level1.chicken.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-            if (enemy.isDead) return;  // Gegner ist bereits tot, keine Aktion mehr nötig
-            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
-              this.character.speedY <= 0) {    
-                enemy.isDead = true;
-                enemy.dieEnemy();
-                this.character.speedY = 10;  // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
-                if (!this.isMuted) {
-                  this.soundCollection.sounds.hitEnemySound.play();
-                }
-            } else {
-                // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
-                this.character.hit();
-                this.statusBar[0].setPercentageHealth(this.character.energy);
-                if (!this.isMuted) {
-                this.soundCollection.sounds.hurtCharacter.play();
-                }
-            }
+      if (this.character.isColliding(enemy)) {
+        if (enemy.isDead) return; // Gegner ist bereits tot, keine Aktion mehr nötig
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
+          enemy.isDead = true;
+          enemy.dieEnemy();
+          this.character.speedY = 10; // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
+        } else {
+          // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
+          this.character.hit();
+          this.statusBar[0].setPercentageHealth(this.character.energy);
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hurtCharacter.play();
+          }
         }
+      }
     });
   }
 
   checkCollisonWithSmallChicken() {
     level1.smallChicken.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-            if (enemy.isDead) return;  // Gegner ist bereits tot, keine Aktion mehr nötig
-            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
-              this.character.speedY <= 0) {    
-                enemy.isDead = true;
-                enemy.dieEnemy();
-                this.character.speedY = 10;  // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
-                if (!this.isMuted) {
-                  this.soundCollection.sounds.hitEnemySound.play();
-                }
-            } else {
-                // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
-                this.character.hit();
-                this.statusBar[0].setPercentageHealth(this.character.energy);
-                if (!this.isMuted) {
-                this.soundCollection.sounds.hurtCharacter.play();
-                }
-            }
+      if (this.character.isColliding(enemy)) {
+        if (enemy.isDead) return; // Gegner ist bereits tot, keine Aktion mehr nötig
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
+          enemy.isDead = true;
+          enemy.dieEnemy();
+          this.character.speedY = 10; // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
+        } else {
+          // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
+          this.character.hit();
+          this.statusBar[0].setPercentageHealth(this.character.energy);
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hurtCharacter.play();
+          }
         }
+      }
     });
   }
 
@@ -150,7 +163,7 @@ class World {
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
         if (!this.isMuted) {
-        this.soundCollection.sounds.hurtCharacter.play();
+          this.soundCollection.sounds.hurtCharacter.play();
         }
       }
     });
@@ -161,8 +174,8 @@ class World {
       if (this.character.isColliding(coin)) {
         if (!this.isMuted) {
           this.soundCollection.sounds.coinCollectSound.play();
-        }        
-        this.coins.splice(i, 1); 
+        }
+        this.coins.splice(i, 1);
         this.collectedCoin++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
       }
@@ -171,8 +184,11 @@ class World {
 
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
-      if (this.character.isColliding(bottle) && this.collectedBottles < this.maxCollectedBottles) {
-        this.bottles.splice(i, 1); 
+      if (
+        this.character.isColliding(bottle) &&
+        this.collectedBottles < this.maxCollectedBottles
+      ) {
+        this.bottles.splice(i, 1);
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
         if (!this.isMuted) {
@@ -190,7 +206,6 @@ class World {
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
-         
         }
       });
     });
@@ -214,6 +229,7 @@ class World {
       level1.endboss.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           enemy.hitEnemy();
+          this.statusBar[3].hitEndboss(this.hitCount);
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
@@ -227,7 +243,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
-    
+
     this.ctx.translate(-this.camera_x, 0);
     this.addObjectsToMap(this.statusBar);
     this.ctx.translate(this.camera_x, 0);
@@ -276,5 +292,4 @@ class World {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
-  
 }

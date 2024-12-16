@@ -49,7 +49,7 @@ class Endboss extends MovableObject {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
-    this.loadImages(this.IMAGES_DEAD);  
+    this.loadImages(this.IMAGES_DEAD);
     this.speed = 1;
     this.x = 720 * 5.5;
     this.isDead = false;
@@ -78,7 +78,6 @@ class Endboss extends MovableObject {
       } else if (this.x >= this.maxX) {
         this.otherDirection = false;
       }
-
       if (this.otherDirection) {
         this.moveForward();
       } else {
@@ -124,13 +123,15 @@ class Endboss extends MovableObject {
     this.isDead = true;
     let currentImageIndex = 0;
 
-    let interval = setInterval(() => { // erstelle eine Variable, um den Interval später abzurufen und abzubrechen 
+    let interval = setInterval(() => {
+      // erstelle eine Variable, um den Interval später abzurufen und abzubrechen
 
       this.loadImage(this.IMAGES_DEAD[currentImageIndex]); // Es wird immer 1 Bild nacheinander abgerufen, da bei jedem durchlauf CurrentImageIndex um 1 erhöht wird.
       currentImageIndex++; // CurrentImage wird mit jeden durchgang um 1 erhöht.
 
       // Stoppen der Animation, wenn alle Bilder durch sind
-      if (currentImageIndex >= this.IMAGES_DEAD.length) { // vergleichen von CurrentImageIndex und Array.length bis der currentImageIndex die length des Arrays erreicht
+      if (currentImageIndex >= this.IMAGES_DEAD.length) {
+        // vergleichen von CurrentImageIndex und Array.length bis der currentImageIndex die length des Arrays erreicht
         clearInterval(interval); // Animation stoppen
       }
     }, 200); // Zeitintervall zwischen den Bildern
