@@ -10,7 +10,9 @@ function startGame() {
   setTimeout(() => {
     initLevel();
     init();
-  }, 1000);
+    document.getElementById("muteButtonID").style.display = "block";
+    document.getElementById("fullscreenImgID").style.display = "block";
+  }, 500);
 }
 
 function fullscreen() {

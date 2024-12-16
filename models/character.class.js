@@ -6,6 +6,7 @@ class Character extends MovableObject {
   speed = 1.75;
   energy = 100;
   keyPressed = true;
+
   IMAGES_STAY = [
     "img/2_character_pepe/1_idle/idle/I-1.png",
     "img/2_character_pepe/1_idle/idle/I-2.png",
