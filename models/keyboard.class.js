@@ -4,6 +4,7 @@ class Keyboard {
   UP = false;
   SPACE = false;
   F = false;
+  lastPressedKey = 0;
 
   /**
    * Creates an instance of the Keyboard class.
@@ -39,6 +40,7 @@ class Keyboard {
     });
 
     window.addEventListener("keyup", (event) => {
+      this.lastPressedKey = new Date().getTime();
       if (event.code == "ArrowUp") {
         this.UP = false;
       }
@@ -59,7 +61,10 @@ class Keyboard {
       }
     });
   }
-
+  
+ /**
+   * Sets up keyboard for Smartphone.
+   */
   mobileButtonEvents() {
     document
       .getElementById("left_btn")

@@ -4,6 +4,10 @@ class BottleBar extends DrawableObject {
   height = 60;
   width = 200;
   collectedBottles = 0;
+
+  /**
+   * load Bottle Statusbar Images in array.
+   */
   IMAGES_BOTTLE_STATUS = [
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
@@ -24,7 +28,6 @@ class BottleBar extends DrawableObject {
     this.collectedBottles = amountOfBottles;
     let path = this.IMAGES_BOTTLE_STATUS[this.resolveImageIndex()];
     this.img = this.imageCache[path];
-    // console.log(this.collectedBottles);
   }
 
   resolveImageIndex() {

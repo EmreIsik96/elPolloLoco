@@ -11,6 +11,9 @@ class MovableObject extends DrawableObject {
     left: 0,
   };
 
+ /**
+   * give the character a gravity so that he returns to the ground after jumping.
+   */
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -20,6 +23,9 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25);
   }
 
+/**
+   * check if the character is on the ground.
+   */
   isAboveGround() {
     if (this instanceof ThorwableObject) {
       return true;
@@ -28,26 +34,40 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   * display the images in the cache.
+   */
   playAnimate(images) {
-    // lässt die Bilder im Cache anzeigen
     let i = this.currentImage % images.length;
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
   }
 
+  /**
+   * make all movable objects run to the right.
+   */
   moveRight() {
     this.x += this.speed;
   }
 
+  /**
+   * make all movable objects run left.
+   */
   moveLeft() {
     this.x -= this.speed;
   }
 
+  /**
+   * make character jump.
+   */
   jump() {
     this.speedY = 15;
   }
 
+  /**
+   * check if character, enemys or objects collide with each other.
+   */
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -57,6 +77,9 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**
+   * check if character hits the enemy.
+   */
   charHitEnemy(mo) {
     return (
       this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -64,6 +87,9 @@ class MovableObject extends DrawableObject {
     );
   }
 
+   /**
+   * what should happen to the character when he is hit.
+   */
   hit() {
     this.energy -= 20;
     if (this.energy < 0) {
@@ -73,18 +99,27 @@ class MovableObject extends DrawableObject {
     }
   }
 
+   /**
+   * whether character is injured.
+   */
   isHurt() {
-    let timePassed = new Date().getTime() - this.lastHit; // Difference in ms
+    let timePassed = new Date().getTime() - this.lastHit;
     timePassed = timePassed / 1000;
     return timePassed < 0.7;
   }
 
+  /**
+   * whether character is dead.
+   */
   isDead() {
     if (this.energy == 0) {
       gameOver();
     }
   }
 
+   /**
+   * makes the character walk.
+   */
   charWalking() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -102,6 +137,9 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   * makes the character jump.
+   */
   charJumping() {
     if (this.world.keyboard.SPACE) {
       if (this.y > 230) {

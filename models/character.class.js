@@ -7,6 +7,9 @@ class Character extends MovableObject {
   energy = 100;
   keyPressed = true;
 
+  /**
+   * IMAGES array from Character.
+   */
   IMAGES_STAY = [
     "img/2_character_pepe/1_idle/idle/I-1.png",
     "img/2_character_pepe/1_idle/idle/I-2.png",
@@ -71,6 +74,9 @@ class Character extends MovableObject {
     left: 40,
   };
 
+  /**
+   * load animate Images from Character.
+   */
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
     this.loadImages(this.IMAGES_SLEEPING);
@@ -83,19 +89,24 @@ class Character extends MovableObject {
     this.applyGravity();
   }
 
+ /**
+   * play animate Images from Character.
+   */
   animate() {
-    setInterval(() => {
-      if (charIsDead) return;
 
+    setInterval(() => {
+      if (charIsDead) {
+        return;
+      }
       this.charWalking();
       this.charJumping();
-
       this.world.camera_x = -this.x + 250;
     });
 
     setInterval(() => {
-      if (charIsDead) return;
-
+      if (charIsDead) {
+        return;
+      }
       if (this.isDead()) {
         this.playAnimate(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
@@ -106,7 +117,13 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimate(this.IMAGES_WALKING);
         } else {
-          this.playAnimate(this.IMAGES_STAY);
+          let timePassed = new Date().getTime() - this.world.keyboard.lastPressedKey;
+          timePassed = timePassed / 1000;
+          if (timePassed > 3.0) {
+            this.playAnimate(this.IMAGES_SLEEPING);
+          }else {
+            this.playAnimate(this.IMAGES_STAY);
+          }
         }
         if (this.world.keyboard.SPACE) {
           this.playAnimate(this.IMAGES_JUMPING);

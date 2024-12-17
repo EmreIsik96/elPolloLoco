@@ -107,19 +107,15 @@ class World {
   checkCollisonWithChicken() {
     level1.chicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        if (enemy.isDead) return; // Gegner ist bereits tot, keine Aktion mehr nötig
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
+        if (enemy.isDead) return;
+        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
           enemy.isDead = true;
           enemy.dieEnemy();
-          this.character.speedY = 10; // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+          this.character.speedY = 10; 
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
         } else {
-          // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
           this.character.hit();
           this.statusBar[0].setPercentageHealth(this.character.energy);
           if (!this.isMuted) {
@@ -133,19 +129,18 @@ class World {
   checkCollisonWithSmallChicken() {
     level1.smallChicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        if (enemy.isDead) return; // Gegner ist bereits tot, keine Aktion mehr nötig
+        if (enemy.isDead) return;
         if (
           this.character.y + this.character.height <= enemy.y + enemy.height &&
           this.character.speedY <= 0
         ) {
           enemy.isDead = true;
           enemy.dieEnemy();
-          this.character.speedY = 10; // Rückstoß nach dem Treffer (der Charakter springt leicht hoch)
+          this.character.speedY = 10; 
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
         } else {
-          // Charakter kollidiert mit dem Gegner von der Seite => Charakter nimmt Schaden
           this.character.hit();
           this.statusBar[0].setPercentageHealth(this.character.energy);
           if (!this.isMuted) {
