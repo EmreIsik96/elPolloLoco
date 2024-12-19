@@ -4,14 +4,20 @@ class Chicken extends MovableObject {
   y = 360;
   hitCount = 0;
   maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
-  dyingNormalChicken = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
+  dyingNormalChicken = "img/3_enemies_chicken/chicken_normal/2_dead/dead.png";
+
+  /**
+   * Collect Images from Chicken.
+   */
   IMAGES_WALKING_NORMAL_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
-  
 
+  /**
+   * load animate Images from Chicken and place them random on world.
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING_NORMAL_CHICKEN[0]);
     this.loadImages(this.IMAGES_WALKING_NORMAL_CHICKEN);
@@ -22,7 +28,13 @@ class Chicken extends MovableObject {
     this.animate();
   }
 
+  /**
+   *  play animate Images from Chicken.
+   */
   animate() {
+    /**
+     * If character is not dead, move left for all chicken.
+     */
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
@@ -30,6 +42,9 @@ class Chicken extends MovableObject {
       }
     }, 1000 / 60);
 
+    /**
+     * If character is not dead, play move Images from Chicken.
+     */
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimate(this.IMAGES_WALKING_NORMAL_CHICKEN);
@@ -37,6 +52,9 @@ class Chicken extends MovableObject {
     }, 100);
   }
 
+  /**
+   * If Chicken is not dead, count the hits from Chicken.
+   */
   hitEnemy() {
     if (this.isDead) return;
 
@@ -48,9 +66,12 @@ class Chicken extends MovableObject {
     }
   }
 
+  /**
+   * Chicken is dead, load and show the Dead Images.
+   */
   dieEnemy() {
-   this.isDead = true;
-   this.speed = 0;
-   this.loadImage(this.dyingNormalChicken);
+    this.isDead = true;
+    this.speed = 0;
+    this.loadImage(this.dyingNormalChicken);
   }
 }

@@ -9,6 +9,10 @@ class Coins extends DrawableObject{
         right: 40,
         left: 40,
     }
+
+    /**
+   * place coins random on map.
+   */
     constructor()
     {
         super();

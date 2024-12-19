@@ -4,6 +4,10 @@ class HealthBar extends DrawableObject {
   height = 60;
   width = 200;
   percentage = 100;
+
+  /**
+   * collect Charachter Health Statusbar Images.
+   */
   IMAGES_HEALTH_STATUS = [
     "img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png",
@@ -13,6 +17,9 @@ class HealthBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png",
   ];
 
+   /**
+   * load Charachter Health Statusbar Images.
+   */
   constructor()
   {
     super();
@@ -20,6 +27,9 @@ class HealthBar extends DrawableObject {
     this.setPercentageHealth(100);
   }
 
+  /**
+   * count the health status from Character.
+   */
   setPercentageHealth(percentageForHealth)
   {
     this.percentage = percentageForHealth;
@@ -27,6 +37,9 @@ class HealthBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
+  /**
+   * change Statusbar Images while hit Character.
+   */
     resolveImageIndex()
     {
         if (this.percentage == 100) {

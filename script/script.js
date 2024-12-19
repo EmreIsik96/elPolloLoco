@@ -2,6 +2,9 @@ let soundCollection = new SoundCollection();
 let charIsDead = false;
 let bossIsDead = false;
 
+/**
+ * Here the start is triggered, levels, enemies and all objects are executed and placed with the start .
+ */
 function startGame() {
   charIsDead = false;
   document.getElementById("start-screen").style.display = "none";
@@ -15,11 +18,17 @@ function startGame() {
   }, 500);
 }
 
+/**
+ * full screen is opened.
+ */
 function fullscreen() {
   let fullscreen = document.getElementById("canvas");
   enterFullscreen(fullscreen);
 }
 
+/**
+ * full screen is opened.
+ */
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
@@ -30,12 +39,18 @@ function enterFullscreen(element) {
   }
 }
 
+/**
+ * close the fullscreen.
+ */
 function closeFullscreen() {
   document.getElementById("fullscreenImgID").style.display = "block";
   document.getElementById("shrinkImgID").style.display = "none";
   exitFullscreen();
 }
 
+/**
+ * close the fullscreen.
+ */
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -45,6 +60,9 @@ function exitFullscreen() {
   document.getElementById("canvas").style.width = "";
 }
 
+/**
+ * the instructions are hereby displayed.
+ */
 function instructions() {
   document.getElementById("start-image").style.display = "none";
   document.getElementById("instructionsID").style.display = "block";
@@ -55,6 +73,9 @@ function instructions() {
     "block";
 }
 
+/**
+ * the instructions are hereby closed.
+ */
 function backFromInstructions() {
   document.getElementById("start-image").style.display = "block";
   document.getElementById("instructionsID").style.display = "none";
@@ -64,6 +85,9 @@ function backFromInstructions() {
   document.getElementById("backButtonFromIstructionsID").style.display = "none";
 }
 
+/**
+ * the imprint is hereby displayed.
+ */
 function imprint() {
   document.getElementById("start-image").style.display = "none";
   document.getElementById("imprintID").style.display = "block";
@@ -73,6 +97,9 @@ function imprint() {
   document.getElementById("backButtonFromImprintID").style.display = "block";
 }
 
+/**
+ * the imprint is hereby closed.
+ */
 function backFromImprint() {
   document.getElementById("start-image").style.display = "block";
   document.getElementById("imprintID").style.display = "none";
@@ -82,10 +109,16 @@ function backFromImprint() {
   document.getElementById("backButtonFromIstructionsID").style.display = "none";
 }
 
+/**
+ * This will clear all current intervals.
+ */
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/**
+ * here the game over is displayed.
+ */
 function gameOver() {
   clearAllIntervals();
   charIsDead = true;
@@ -97,6 +130,9 @@ function gameOver() {
   document.getElementById("gameOver-screen").style.display = "block";
 }
 
+/**
+ * here the win game is displayed.
+ */
 function winGame() {
   clearAllIntervals();
   bossIsDead = true;
@@ -108,6 +144,9 @@ function winGame() {
   document.getElementById("game-container").style.display = "none";
 }
 
+/**
+ * this will restart the game.
+ */
 function restartGame() {
   let isMuted = world.isMuted;
   charIsDead = false;
@@ -123,6 +162,9 @@ function restartGame() {
   world.isMuted = isMuted;
 }
 
+/**
+ * here the audio is muted.
+ */
 function muteSound() {
   world.isMuted = !world.isMuted;
   if (!world.isMuted) {

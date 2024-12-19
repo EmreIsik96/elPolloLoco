@@ -3,6 +3,10 @@ class CoinBar extends DrawableObject {
   y = 0;
   height = 60;
   width = 200;
+
+  /**
+   * collect Coin Statusbar Images.
+   */
   IMAGES_COIN_STATUS = [
     "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png",
@@ -12,12 +16,18 @@ class CoinBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png",
   ];
 
+  /**
+   * load Coin Statusbar Images.
+   */
   constructor() {
     super().loadImage(this.IMAGES_COIN_STATUS[0]);
     this.loadImages(this.IMAGES_COIN_STATUS);
     this.setCollectedCoins(0);
   }
 
+  /**
+   * count the collected Coins.
+   */
   setCollectedCoins(percentageForCoins) {
     this.y = 50;
     this.collectedCoin = percentageForCoins;
@@ -25,6 +35,9 @@ class CoinBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
+  /**
+   * change Statusbar Images while collecting Coins.
+   */
   resolveImageIndex() {
     if (this.collectedCoin == 5) {
       return 5;

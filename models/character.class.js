@@ -94,6 +94,9 @@ class Character extends MovableObject {
    */
   animate() {
 
+    /**
+   * If character is not dead, run and jump functions are performed when pressing the keys.
+   */
     setInterval(() => {
       if (charIsDead) {
         return;
@@ -103,6 +106,9 @@ class Character extends MovableObject {
       this.world.camera_x = -this.x + 250;
     });
 
+    /**
+   * If character is not dead, run and jump images are played when pressing the keys.
+   */
     setInterval(() => {
       if (charIsDead) {
         return;

@@ -61,8 +61,8 @@ class Keyboard {
       }
     });
   }
-  
- /**
+
+  /**
    * Sets up keyboard for Smartphone.
    */
   mobileButtonEvents() {

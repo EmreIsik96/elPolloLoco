@@ -11,7 +11,7 @@ class MovableObject extends DrawableObject {
     left: 0,
   };
 
- /**
+  /**
    * give the character a gravity so that he returns to the ground after jumping.
    */
   applyGravity() {
@@ -23,7 +23,7 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25);
   }
 
-/**
+  /**
    * check if the character is on the ground.
    */
   isAboveGround() {
@@ -87,7 +87,7 @@ class MovableObject extends DrawableObject {
     );
   }
 
-   /**
+  /**
    * what should happen to the character when he is hit.
    */
   hit() {
@@ -99,7 +99,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-   /**
+  /**
    * whether character is injured.
    */
   isHurt() {
@@ -117,7 +117,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-   /**
+  /**
    * makes the character walk.
    */
   charWalking() {

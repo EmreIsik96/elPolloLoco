@@ -35,6 +35,9 @@ class World {
   }
 
   run() {
+    /**
+     * play the functions at intervals.
+     */
     setInterval(() => {
       this.checkCollisonBossWithBottle();
     }, 600);
@@ -65,6 +68,9 @@ class World {
     }, 20);
   }
 
+  /**
+   * check all collisions on the map.
+   */
   checkCollisions() {
     this.checkCollisonWithCoin();
     this.checkCollisonWithChicken();
@@ -76,6 +82,9 @@ class World {
     this.checkCollisonBossWithBottle();
   }
 
+  /**
+   * check if the bottle has been thrown so that the status bar and maximum number of collected bottles have been reached so that no more can be picked up.
+   */
   checkThrowObjects() {
     if (this.keyboard.F && this.collectedBottles > 0) {
       let bottle = new ThorwableObject(
@@ -88,30 +97,45 @@ class World {
     }
   }
 
+  /**
+   * connect character with word so that you can access world later via character.
+   */
   setWorld() {
     this.character.world = this;
   }
 
+  /**
+   * Collect coins and push them into the array.
+   */
   addCoins(amountOfCoins) {
     for (let i = 0; i < amountOfCoins; i++) {
-      this.coins.push(new Coins()); // Erstelle einen neuen Coin und füge ihn zum Array hinzu
+      this.coins.push(new Coins());
     }
   }
 
+  /**
+   * Collect bottles and push them into the array.
+   */
   addBottles(amountOfBottles) {
     for (let i = 0; i < amountOfBottles; i++) {
       this.bottles.push(new Bottles()); // Erstelle einen neuen bottle und füge ihn zum Array hinzu
     }
   }
 
+  /**
+   * check collision with chicken.
+   */
   checkCollisonWithChicken() {
     level1.chicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         if (enemy.isDead) return;
-        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
           enemy.isDead = true;
           enemy.dieEnemy();
-          this.character.speedY = 10; 
+          this.character.speedY = 10;
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
@@ -126,6 +150,9 @@ class World {
     });
   }
 
+  /**
+   * check collision with small chicken.
+   */
   checkCollisonWithSmallChicken() {
     level1.smallChicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -136,7 +163,7 @@ class World {
         ) {
           enemy.isDead = true;
           enemy.dieEnemy();
-          this.character.speedY = 10; 
+          this.character.speedY = 10;
           if (!this.isMuted) {
             this.soundCollection.sounds.hitEnemySound.play();
           }
@@ -151,6 +178,9 @@ class World {
     });
   }
 
+  /**
+   * check collision with Endboss.
+   */
   checkCollisonWithEndboss() {
     level1.endboss.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -164,6 +194,9 @@ class World {
     });
   }
 
+  /**
+   * check collision with Coin on map.
+   */
   checkCollisonWithCoin() {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
@@ -177,6 +210,9 @@ class World {
     });
   }
 
+  /**
+   * check collision with bottle on map.
+   */
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
       if (
@@ -193,6 +229,9 @@ class World {
     });
   }
 
+  /**
+   * check collision between throwed bottle and chicken.
+   */
   checkCollisonChickenWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
       level1.chicken.forEach((enemy) => {
@@ -206,6 +245,9 @@ class World {
     });
   }
 
+  /**
+   * check collision between throwed bottle and small chicken.
+   */
   checkCollisonSmallChickenWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
       level1.smallChicken.forEach((enemy) => {
@@ -219,6 +261,9 @@ class World {
     });
   }
 
+  /**
+   * check collision between throwed bottle and Endboss.
+   */
   checkCollisonBossWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
       level1.endboss.forEach((enemy) => {
@@ -233,6 +278,9 @@ class World {
     });
   }
 
+  /**
+   * drawing collected objects/images on the canvas.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -259,12 +307,18 @@ class World {
     });
   }
 
+  /**
+   * drawing collected objects/images on the canvas.
+   */
   addObjectsToMap(objects) {
     objects.forEach((o) => {
       this.addToMap(o);
     });
   }
 
+  /**
+   * drawing collected objects/images on the canvas.
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
@@ -276,6 +330,9 @@ class World {
     }
   }
 
+  /**
+   * flip Image so that character points in the right direction.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -283,6 +340,9 @@ class World {
     mo.x = mo.x * -1;
   }
 
+  /**
+   * flip character image in reverse direction.
+   */
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();

@@ -3,6 +3,10 @@ class EndbossBar extends DrawableObject {
   y = 80;
   height = 60;
   width = 200;
+
+  /**
+   * collect Endboss Statusbar Images.
+   */
   IMAGES_ENDBOSS_BAR = [
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
@@ -12,18 +16,27 @@ class EndbossBar extends DrawableObject {
     "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
   ];
 
+  /**
+   * load Endboss Statusbar Images.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES_ENDBOSS_BAR);
     this.hitEndboss();
   }
 
+   /**
+   * count the hit on Endboss.
+   */
   hitEndboss() {
     this.hitCount = level1.endboss[0].hitCount;
     let path = this.IMAGES_ENDBOSS_BAR[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
+   /**
+   * change Statusbar Images while hit Endboss.
+   */
   resolveImageIndex() {
     if (this.hitCount > 5) {
       return 0;

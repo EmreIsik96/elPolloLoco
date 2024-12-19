@@ -17,12 +17,18 @@ class BottleBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
   ];
 
+   /**
+   * run functions.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES_BOTTLE_STATUS);
     this.setCollectedBottles(0);
   }
 
+   /**
+   * count collected Bottles.
+   */
   setCollectedBottles(amountOfBottles) {
     this.y = 100;
     this.collectedBottles = amountOfBottles;
@@ -30,6 +36,9 @@ class BottleBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
+   /**
+   * change Statusbar Images while collecting Bottles.
+   */
   resolveImageIndex() {
     if (this.collectedBottles > 5) {
       return 5;

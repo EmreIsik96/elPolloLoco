@@ -6,6 +6,10 @@ class Endboss extends MovableObject {
   minX = 720 * 4.5;
   maxX = 720 * 5.5;
   maxHits = 5;
+
+  /**
+   * IMAGES array from Endboss.
+   */
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -45,6 +49,9 @@ class Endboss extends MovableObject {
     left: 40,
   };
 
+  /**
+   * load animate Images from Endboss.
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -57,6 +64,9 @@ class Endboss extends MovableObject {
   }
 
   animate() {
+    /**
+   * If character is not dead, run and jump functions are performed when pressing the keys.
+   */
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
@@ -64,6 +74,9 @@ class Endboss extends MovableObject {
       }
     }, 1000 / 60);
 
+    /**
+   * If character is not dead, run and jump images are played when pressing the keys.
+   */
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimate(this.IMAGES_WALKING);
@@ -71,6 +84,9 @@ class Endboss extends MovableObject {
     }, 200);
   }
 
+  /**
+   * move Endboss.
+   */
   moveEndboss() {
     setTimeout(() => {
       if (this.x <= this.minX) {
@@ -86,16 +102,25 @@ class Endboss extends MovableObject {
     }, 7000);
   }
 
+  /**
+   * Let the final boss run to the left towards the character.
+   */
   moveForward() {
     this.speed = Math.random() * 7;
     this.x += this.speed;
   }
 
+  /**
+   * Let the final boss run to the right away from character.
+   */
   moveBackward() {
     this.speed = Math.random() * 15;
     this.x -= this.speed;
   }
 
+  /**
+   * If Endboss is not dead, count the hits from Endboss.
+   */
   hitEnemy() {
     if (this.isDead) return;
     this.hitCount++;
@@ -118,6 +143,9 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Endboss is dead, load and show the Dead Images.
+   */
   dieEnemy() {
     this.speed = 0;
     this.isDead = true;

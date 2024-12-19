@@ -3,11 +3,18 @@ class Bottles extends MovableObject{
     y = 230;
     height = 60;
     width = 60;
+
+    /**
+   * load Bottle Images.
+   */
     IMAGES_BOTTLE_ON_THE_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ]    
     
+    /**
+   * run functions.
+   */
     constructor(){
         super().loadImages(this.IMAGES_BOTTLE_ON_THE_GROUND);
         this.x = 100 + Math.random() * 720 * 5; // Zufällige X-Koordinate
