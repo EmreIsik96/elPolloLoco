@@ -238,7 +238,10 @@ class World {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
           if (!this.isMuted) {
-            this.soundCollection.sounds.hitEnemySound.play();
+            this.soundCollection.sounds.brokenBottle.play();
+            setTimeout(() => {
+              this.soundCollection.sounds.hitEnemySound.play();
+            }, 500);
           }
         }
       });

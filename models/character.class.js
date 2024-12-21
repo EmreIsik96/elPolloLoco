@@ -89,14 +89,14 @@ class Character extends MovableObject {
     this.applyGravity();
   }
 
- /**
+  /**
    * play animate Images from Character.
    */
   animate() {
-
+    
     /**
-   * If character is not dead, run and jump functions are performed when pressing the keys.
-   */
+     * If character is not dead, run and jump functions are performed when pressing the keys.
+     */
     setInterval(() => {
       if (charIsDead) {
         return;
@@ -107,8 +107,8 @@ class Character extends MovableObject {
     });
 
     /**
-   * If character is not dead, run and jump images are played when pressing the keys.
-   */
+     * If character is not dead, run and jump images are played when pressing the keys.
+     */
     setInterval(() => {
       if (charIsDead) {
         return;
@@ -123,11 +123,12 @@ class Character extends MovableObject {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
           this.playAnimate(this.IMAGES_WALKING);
         } else {
-          let timePassed = new Date().getTime() - this.world.keyboard.lastPressedKey;
+          let timePassed =
+            new Date().getTime() - this.world.keyboard.lastPressedKey;
           timePassed = timePassed / 1000;
           if (timePassed > 3.0) {
             this.playAnimate(this.IMAGES_SLEEPING);
-          }else {
+          } else {
             this.playAnimate(this.IMAGES_STAY);
           }
         }
