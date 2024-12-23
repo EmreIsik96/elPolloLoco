@@ -137,7 +137,7 @@ function winGame() {
   clearAllIntervals();
   bossIsDead = true;
   if (!world.isMuted) {
-    soundCollection.sounds.gameOverAudio.play();
+    soundCollection.sounds.winGame.play();
     soundCollection.sounds.startGameAudio.pause();
   }
   document.getElementById("winScreen").style.display = "block";
@@ -160,6 +160,13 @@ function restartGame() {
   initLevel();
   init();
   world.isMuted = isMuted;
+}
+
+function backToHome() {
+  document.getElementById("gameOver-screen").style.display = "none";
+  document.getElementById("winScreen").style.display = "none";
+  document.getElementById("game-container").style.display = "none";
+  document.getElementById("start-screen").style.display = "block";
 }
 
 /**

@@ -126,7 +126,7 @@ class Character extends MovableObject {
           let timePassed =
             new Date().getTime() - this.world.keyboard.lastPressedKey;
           timePassed = timePassed / 1000;
-          if (timePassed > 3.0) {
+          if (timePassed > 4.0) {
             this.playAnimate(this.IMAGES_SLEEPING);
           } else {
             this.playAnimate(this.IMAGES_STAY);

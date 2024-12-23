@@ -46,15 +46,18 @@ class World {
     }, 180);
     setInterval(() => {
       if (charIsDead) return;
-      this.checkCollisonWithEndboss();
+      const currentTime = new Date().getTime();
+      this.checkCollisonWithEndboss(currentTime);
     }, 280);
     setInterval(() => {
       if (charIsDead) return;
-      this.checkCollisonWithChicken();
+      const currentTime = new Date().getTime();
+      this.checkCollisonWithChicken(currentTime);
     }, 100);
     setInterval(() => {
       if (charIsDead) return;
-      this.checkCollisonWithSmallChicken();
+      const currentTime = new Date().getTime();
+      this.checkCollisonWithSmallChicken(currentTime);
     }, 100);
     setInterval(() => {
       this.checkCollisonChickenWithBottle();
@@ -125,38 +128,41 @@ class World {
   /**
    * check collision with chicken.
    */
-  checkCollisonWithChicken() {
+  checkCollisonWithChicken(currentTime) {
     level1.chicken.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        if (enemy.isDead) return;
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
-          enemy.isDead = true;
-          enemy.dieEnemy();
-          this.character.speedY = 10;
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hitEnemySound.play();
-          }
-        } else {
-          this.character.hit();
-          this.statusBar[0].setPercentageHealth(this.character.energy);
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hurtCharacter.play();
-          }
+        if (this.character.isColliding(enemy)) {
+          const alreadyHit = currentTime - enemy.lastCollision < 1000;
+            if (enemy.isDead) return;
+            if (alreadyHit) return;
+            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
+                this.character.speedY <= 0) {
+                enemy.isDead = true;
+                enemy.dieEnemy();
+                this.character.speedY = 10;
+                if (!this.isMuted) {
+                    this.soundCollection.sounds.hitEnemySound.play();
+                }
+            } else {
+                this.character.hit();
+                this.statusBar[0].setPercentageHealth(this.character.energy);
+                if (!this.isMuted) {
+                    this.soundCollection.sounds.hurtCharacter.play();
+                }
+            }
+            enemy.lastCollision = currentTime;
         }
-      }
     });
-  }
+}
 
   /**
    * check collision with small chicken.
    */
-  checkCollisonWithSmallChicken() {
+  checkCollisonWithSmallChicken(currentTime) {
     level1.smallChicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
+        const alreadyHit = currentTime - enemy.lastCollision < 1000;
         if (enemy.isDead) return;
+        if (alreadyHit) return;
         if (
           this.character.y + this.character.height <= enemy.y + enemy.height &&
           this.character.speedY <= 0
@@ -174,6 +180,7 @@ class World {
             this.soundCollection.sounds.hurtCharacter.play();
           }
         }
+        enemy.lastCollision = currentTime;
       }
     });
   }
@@ -181,15 +188,18 @@ class World {
   /**
    * check collision with Endboss.
    */
-  checkCollisonWithEndboss() {
+  checkCollisonWithEndboss(currentTime) {
     level1.endboss.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        if (enemy.isDead) return;
+        const alreadyHit = currentTime - enemy.lastCollision < 1000;
+            if (enemy.isDead) return;
+            if (alreadyHit) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
         if (!this.isMuted) {
           this.soundCollection.sounds.hurtCharacter.play();
         }
+      enemy.lastCollision = currentTime;
       }
     });
   }

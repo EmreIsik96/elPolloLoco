@@ -12,6 +12,7 @@ class SoundCollection {
     coinCollectSound: new Audio("audio/coin-collect.mp3"),
     collectBottleSound: new Audio("audio/collect_bottle.mp3"),
     brokenBottle: new Audio("audio/broken-bottle.mp3"),
+    winGame: new Audio("audio/win-Game.mp3")
   };
 
   /**

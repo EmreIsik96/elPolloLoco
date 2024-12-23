@@ -114,7 +114,7 @@ class Endboss extends MovableObject {
    * Let the final boss run to the right away from character.
    */
   moveBackward() {
-    this.speed = Math.random() * 15;
+    this.speed = Math.random() * 7;
     this.x -= this.speed;
   }
 
