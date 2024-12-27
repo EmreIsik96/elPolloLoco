@@ -173,7 +173,7 @@ function backToHome() {
  * here the audio is muted.
  */
 function muteSound() {
-  world.isMuted = !world.isMuted;
+  world.isMuted = !world.isMuted;  
   if (!world.isMuted) {
     soundCollection.sounds.startGameAudio.play();
   } else {
@@ -181,4 +181,22 @@ function muteSound() {
   }
   document.getElementById("sound").classList.toggle("d-none");
   document.getElementById("mute").classList.toggle("d-none");
+  document.getElementById("unmuteButtonID").style.display = "block";
+  document.getElementById("muteButtonID").style.display = "none";
 }
+
+/**
+ * here the audio is unmuted.
+ */
+function unmuteSound() {
+  world.isMuted = !world.isMuted;  
+  if (!world.isMuted) {
+    soundCollection.sounds.startGameAudio.play();
+  } else {
+    soundCollection.sounds.startGameAudio.pause();
+  }
+  document.getElementById("unmuteButtonID").style.display = "none";
+  document.getElementById("muteButtonID").style.display = "block";
+}
+  
+  

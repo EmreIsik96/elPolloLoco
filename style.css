@@ -260,6 +260,12 @@ span {
   margin-right: 10px;
   cursor: pointer;
 }
+.unmuteButton {
+  height: 65px;
+  margin-top: -9px;
+  margin-right: 9px;
+  cursor: pointer;
+}
 
 @media (max-width: 1024px) {
   body {
