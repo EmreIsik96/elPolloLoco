@@ -1,5 +1,4 @@
 class ThorwableObject extends MovableObject {
-
   /**
    * collect Rotations Images when throwing the bottle.
    */
@@ -17,7 +16,7 @@ class ThorwableObject extends MovableObject {
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
-];
+  ];
 
   intervalID;
 
@@ -58,6 +57,9 @@ class ThorwableObject extends MovableObject {
     }, 100);
   }
 
+  /**
+   * splash Bottle Function.
+   */
   splash() {
     clearInterval(this.intervalID);
     this.currentImage = 0;

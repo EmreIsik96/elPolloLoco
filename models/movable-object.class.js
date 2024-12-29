@@ -44,7 +44,9 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
-
+ /**
+   * it plays the Animation once time in the cache.
+   */
   playAnimationOnce(images) {    
     setInterval(() => {
       if(this.currentImage == images.length) {

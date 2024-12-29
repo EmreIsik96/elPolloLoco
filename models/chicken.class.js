@@ -32,6 +32,7 @@ class Chicken extends MovableObject {
    *  play animate Images from Chicken.
    */
   animate() {
+    
     /**
      * If character is not dead, move left for all chicken.
      */
