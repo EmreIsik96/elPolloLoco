@@ -44,6 +44,21 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+
+  playAnimationOnce(images) {    
+    setInterval(() => {
+      if(this.currentImage == images.length) {
+        clearInterval();
+        return;
+      }
+
+      let path = images[this.currentImage];
+      this.img = this.imageCache[path];
+      this.currentImage++;
+    }, 50);
+  }
+  
+
   /**
    * make all movable objects run to the right.
    */

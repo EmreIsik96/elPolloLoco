@@ -10,6 +10,17 @@ class ThorwableObject extends MovableObject {
     "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
   ];
 
+  IMAGES_BOTTLE_SPLASH = [
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
+    "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
+];
+
+  intervalID;
+
   /**
    * load Rotations Images when throwing the bottle.
    */
@@ -18,6 +29,7 @@ class ThorwableObject extends MovableObject {
       "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
     );
     this.loadImages(this.IMAGES_BOTTLE);
+    this.loadImages(this.IMAGES_BOTTLE_SPLASH);
     this.x = x;
     this.y = y;
     this.height = 50;
@@ -41,8 +53,14 @@ class ThorwableObject extends MovableObject {
         this.x -= 6;
       }, 20);
     }
-    setInterval(() => {
+    this.intervalID = setInterval(() => {
       this.playAnimate(this.IMAGES_BOTTLE);
     }, 100);
+  }
+
+  splash() {
+    clearInterval(this.intervalID);
+    this.currentImage = 0;
+    this.playAnimationOnce(this.IMAGES_BOTTLE_SPLASH);
   }
 }

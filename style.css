@@ -366,7 +366,7 @@ span {
     display: flex;
     justify-content: center;
   }
-  .muteButton {
+  .muteButton,.fullscreen {
     display: none;
   }
 }

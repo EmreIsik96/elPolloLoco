@@ -247,6 +247,7 @@ class World {
       level1.chicken.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
+          bottle.splash();
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
             setTimeout(() => {
@@ -266,6 +267,7 @@ class World {
       level1.smallChicken.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
+          bottle.splash();
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
             setTimeout(() => {
@@ -285,6 +287,7 @@ class World {
       level1.endboss.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           enemy.hitEnemy();
+          bottle.splash();  
           this.statusBar[3].hitEndboss(this.hitCount);
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
