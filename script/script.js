@@ -9,6 +9,7 @@ function startGame() {
   charIsDead = false;
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("game-container").style.display = "block";
+  document.getElementById("startButtonMobileID").style.display = "none";
   soundCollection.sounds.startGameAudio.play();
   setTimeout(() => {
     initLevel();
@@ -162,11 +163,15 @@ function restartGame() {
   world.isMuted = isMuted;
 }
 
+/**
+ * this will go back to Main Menu.
+ */
 function backToHome() {
   document.getElementById("gameOver-screen").style.display = "none";
   document.getElementById("winScreen").style.display = "none";
   document.getElementById("game-container").style.display = "none";
   document.getElementById("start-screen").style.display = "block";
+  document.getElementById("startButtonMobileID").style.display = "block";
 }
 
 /**
