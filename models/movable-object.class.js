@@ -159,7 +159,9 @@ class MovableObject extends DrawableObject {
    */
   charJumping() {
     if (this.world.keyboard.SPACE) {
-      if (this.y > 230) {
+      console.log(this.y);
+      
+      if (this.y > 225) {
         this.jump();
         if (!world.isMuted) {
           this.world.soundCollection.sounds.jumping_sound.play();
