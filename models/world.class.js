@@ -28,7 +28,7 @@ class World {
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.addCoins(5);
-    this.addBottles(10);
+    this.addBottles(15);
     this.draw();
     this.setWorld();
     this.run();
@@ -39,8 +39,10 @@ class World {
      * play the functions at intervals.
      */
     setInterval(() => {
-      this.checkCollisonBossWithBottle();
-    }, 600);
+      if (charIsDead) return;
+      const currentTime = new Date().getTime();
+      this.checkCollisonBossWithBottle(currentTime);
+    }, 280);
     setInterval(() => {
       this.checkThrowObjects();
     }, 180);
@@ -121,7 +123,7 @@ class World {
    */
   addBottles(amountOfBottles) {
     for (let i = 0; i < amountOfBottles; i++) {
-      this.bottles.push(new Bottles()); // Erstelle einen neuen bottle und füge ihn zum Array hinzu
+      this.bottles.push(new Bottles()); 
     }
   }
 
@@ -282,12 +284,15 @@ class World {
   /**
    * check collision between throwed bottle and Endboss.
    */
-  checkCollisonBossWithBottle() {
+  checkCollisonBossWithBottle(currentTime) {
     this.thorwableObjects.forEach((bottle) => {
       level1.endboss.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
+          const alreadyHit = currentTime - enemy.lastCollision < 1000;
+          if (alreadyHit) return;
           enemy.hitEnemy();
           bottle.splash();  
+          
           this.statusBar[3].hitEndboss(this.hitCount);
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
@@ -295,6 +300,7 @@ class World {
               this.soundCollection.sounds.hitEnemySound.play();
             }, 500);
           }
+          enemy.lastCollision = currentTime;
         }
       });
     });
