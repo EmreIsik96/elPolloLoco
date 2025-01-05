@@ -295,7 +295,7 @@ span {
     background-size: 450%;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 650px) {
   .rotateDeviceContainer {
     display: flex;
     text-align: center;
@@ -315,27 +315,7 @@ span {
     z-index: 1002;
   }
 }
-@media (max-width: 1366px) and (min-height: 1025px) and (max-height: 1366px){
-  .rotateDeviceContainer {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    text-wrap: wrap;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    letter-spacing: 5px;
-    color: rgba(255, 0, 0, 0.8);
-    font-size: 55px;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 1002;
-  }
-}
-@media only screen and (min-width: 700px) and (max-width: 1366px) and (max-height: 1024px) {
+@media only screen and (max-height: 650px) and (orientation: landscape) {
   .buttonContainer {
     display: none;
   }
@@ -368,40 +348,5 @@ span {
   }
   #muteButtonID,#fullscreenImgID,#unmuteButtonID {
     display: none !important;
-  }
-}
-@media only screen and (max-width: 700px) and (max-height: 800px) and (orientation: landscape) {
-  .buttonContainer {
-    display: none;
-  }
-  .hud {
-    display: block;
-  }
-  canvas,
-  .canvasContainer,
-  .start-image,
-  .endscreen-image,
-  .startContainer,
-  .gameOverContainer,
-  .winContainer {
-    height: 100vh;
-    width: 100vw;
-    border: none;
-    margin: 0;
-    overflow-y: hidden;
-  }
-  .headerMain,
-  .instructionsContainer {
-    display: none;
-  }
-  .startButtonContainer {
-    bottom: 2%;
-  }
-  .gameOverButtonContainer {
-    display: flex;
-    justify-content: center;
-  }
-  .muteButton {
-    display: none;
   }
 }
