@@ -5,7 +5,7 @@ class Keyboard {
   SPACE = false;
   F = false;
   lastPressedKey = 0;
-
+  
   /**
    * Creates an instance of the Keyboard class.
    * Initializes keyboard and mobile button event listeners.

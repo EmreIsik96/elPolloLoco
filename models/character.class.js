@@ -3,7 +3,7 @@ class Character extends MovableObject {
   y = 80;
   height = 200;
   width = 100;
-  speed = 1.75;
+  speed = 2;
   energy = 100;
   keyPressed = true;
 

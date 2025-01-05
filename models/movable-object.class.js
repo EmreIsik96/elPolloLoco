@@ -158,9 +158,7 @@ class MovableObject extends DrawableObject {
    * makes the character jump.
    */
   charJumping() {
-    if (this.world.keyboard.SPACE) {
-      console.log(this.y);
-      
+    if (this.world.keyboard.SPACE) {      
       if (this.y > 225) {
         this.jump();
         if (!world.isMuted) {

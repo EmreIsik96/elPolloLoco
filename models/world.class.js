@@ -33,44 +33,32 @@ class World {
     this.setWorld();
     this.run();
   }
-
-  run() {
-    /**
+  
+   /**
      * play the functions at intervals.
      */
-    setInterval(() => {
-      if (charIsDead) return;
-      const currentTime = new Date().getTime();
-      this.checkCollisonBossWithBottle(currentTime);
-    }, 280);
-    setInterval(() => {
-      this.checkThrowObjects();
-    }, 180);
+  run() {
     setInterval(() => {
       if (charIsDead) return;
       const currentTime = new Date().getTime();
       this.checkCollisonWithEndboss(currentTime);
-    }, 280);
-    setInterval(() => {
-      if (charIsDead) return;
-      const currentTime = new Date().getTime();
-      this.checkCollisonWithChicken(currentTime);
-    }, 100);
-    setInterval(() => {
-      if (charIsDead) return;
-      const currentTime = new Date().getTime();
-      this.checkCollisonWithSmallChicken(currentTime);
-    }, 100);
-    setInterval(() => {
       this.checkCollisonChickenWithBottle();
-    }, 280);
-    setInterval(() => {
       this.checkCollisonSmallChickenWithBottle();
     }, 280);
     setInterval(() => {
+      if (charIsDead) return;
+      const currentTime = new Date().getTime();
+      this.checkThrowObjects();
+      this.checkCollisonWithChicken(currentTime);
+      this.checkCollisonWithSmallChicken(currentTime);
+    }, 100);
+    setInterval(() => {
+      if (charIsDead) return;
+      const currentTime = new Date().getTime();
+      this.checkCollisonBossWithBottle(currentTime);
       this.checkCollisonWithBottle();
       this.checkCollisonWithCoin();
-    }, 20);
+    }, 10);
   }
 
   /**
