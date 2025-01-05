@@ -66,33 +66,24 @@ class Keyboard {
    * Sets up keyboard for Smartphone.
    */
   mobileButtonEvents() {
-    document
-      .getElementById("left_btn")
-      .addEventListener("touchstart", (event) => {
+    this.lastPressedKey = new Date().getTime();
+    document.getElementById("left_btn").addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.LEFT = true;
       });
-    document
-      .getElementById("left_btn")
-      .addEventListener("touchend", (event) => {
+    document.getElementById("left_btn").addEventListener("touchend", (event) => {
         event.preventDefault();
         this.LEFT = false;
       });
-    document
-      .getElementById("right_btn")
-      .addEventListener("touchstart", (event) => {
+    document.getElementById("right_btn").addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.RIGHT = true;
       });
-    document
-      .getElementById("right_btn")
-      .addEventListener("touchend", (event) => {
+    document.getElementById("right_btn").addEventListener("touchend", (event) => {
         event.preventDefault();
         this.RIGHT = false;
       });
-    document
-      .getElementById("up_btn")
-      .addEventListener("touchstart", (event) => {
+    document.getElementById("up_btn").addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.SPACE = true;
       });
