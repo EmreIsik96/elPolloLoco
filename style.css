@@ -328,7 +328,8 @@ span {
   .endscreen-image,
   .startContainer,
   .gameOverContainer,
-  .winContainer {
+  .winContainer,
+  .win-image {
     height: 100vh;
     width: 100vw;
     border: none;
