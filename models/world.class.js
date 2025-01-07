@@ -1,3 +1,7 @@
+/**
+ * Represents the game world.
+ * Manages entities, collisions, sound effects, and rendering.
+ */
 class World {
   character = new Character();
   endboss = new Endboss();
@@ -23,6 +27,11 @@ class World {
   isMuted = false;
   soundCollection = new SoundCollection();
 
+  /**
+   * Creates a new World instance.
+   * @param {HTMLCanvasElement} canvas - The canvas element used for rendering.
+   * @param {Keyboard} keyboard - The Keyboard object for handling user input.
+   */
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -33,10 +42,10 @@ class World {
     this.setWorld();
     this.run();
   }
-  
-   /**
-     * play the functions at intervals.
-     */
+
+  /**
+   * Runs the game loop, handling updates and rendering.
+   */
   run() {
     setInterval(() => {
       if (charIsDead) return;
@@ -62,7 +71,8 @@ class World {
   }
 
   /**
-   * check all collisions on the map.
+   * Checks all collision types in the world.
+   *
    */
   checkCollisions() {
     this.checkCollisonWithCoin();
@@ -76,7 +86,7 @@ class World {
   }
 
   /**
-   * check if the bottle has been thrown so that the status bar and maximum number of collected bottles have been reached so that no more can be picked up.
+   * Checks if the character throws objects (F key) and creates a new "ThorwableObject" if appropriate.
    */
   checkThrowObjects() {
     if (this.keyboard.F && this.collectedBottles > 0) {
@@ -91,14 +101,16 @@ class World {
   }
 
   /**
-   * connect character with word so that you can access world later via character.
+   * Sets the character's `world` property to this World instance.
+   * Allows the character to access the world and its properties.
    */
   setWorld() {
     this.character.world = this;
   }
 
   /**
-   * Collect coins and push them into the array.
+   * Adds a specified number of coins to the world.
+   * @param {number} amountOfCoins - The number of coins to add.
    */
   addCoins(amountOfCoins) {
     for (let i = 0; i < amountOfCoins; i++) {
@@ -107,45 +119,50 @@ class World {
   }
 
   /**
-   * Collect bottles and push them into the array.
+   * Adds a specified number of bottles to the world.
+   * @param {number} amountOfBottles - The number of bottles to add.
    */
   addBottles(amountOfBottles) {
     for (let i = 0; i < amountOfBottles; i++) {
-      this.bottles.push(new Bottles()); 
+      this.bottles.push(new Bottles());
     }
   }
 
   /**
-   * check collision with chicken.
+   * Checks collisions between the character and chickens.
+   * @param {number} currentTime - The current time in milliseconds.
    */
   checkCollisonWithChicken(currentTime) {
     level1.chicken.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          const alreadyHit = currentTime - enemy.lastCollision < 1000;
-            if (enemy.isDead) return;
-            if (alreadyHit) return;
-            if (this.character.y + this.character.height <= enemy.y + enemy.height &&
-                this.character.speedY <= 0) {
-                enemy.isDead = true;
-                enemy.dieEnemy();
-                this.character.speedY = 10;
-                if (!this.isMuted) {
-                    this.soundCollection.sounds.hitEnemySound.play();
-                }
-            } else {
-                this.character.hit();
-                this.statusBar[0].setPercentageHealth(this.character.energy);
-                if (!this.isMuted) {
-                    this.soundCollection.sounds.hurtCharacter.play();
-                }
-            }
-            enemy.lastCollision = currentTime;
+      if (this.character.isColliding(enemy)) {
+        const alreadyHit = currentTime - enemy.lastCollision < 1000;
+        if (enemy.isDead) return;
+        if (alreadyHit) return;
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
+          enemy.isDead = true;
+          enemy.dieEnemy();
+          this.character.speedY = 10;
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hitEnemySound.play();
+          }
+        } else {
+          this.character.hit();
+          this.statusBar[0].setPercentageHealth(this.character.energy);
+          if (!this.isMuted) {
+            this.soundCollection.sounds.hurtCharacter.play();
+          }
         }
+        enemy.lastCollision = currentTime;
+      }
     });
-}
+  }
 
   /**
-   * check collision with small chicken.
+   * Checks collisions between the character and small chickens.
+   * @param {number} currentTime - The current time in milliseconds.
    */
   checkCollisonWithSmallChicken(currentTime) {
     level1.smallChicken.forEach((enemy) => {
@@ -176,26 +193,27 @@ class World {
   }
 
   /**
-   * check collision with Endboss.
+   * Checks collisions between the character and the endboss.
+   * @param {number} currentTime - The current time in milliseconds.
    */
   checkCollisonWithEndboss(currentTime) {
     level1.endboss.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
-            if (enemy.isDead) return;
-            if (alreadyHit) return;
+        if (enemy.isDead) return;
+        if (alreadyHit) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
         if (!this.isMuted) {
           this.soundCollection.sounds.hurtCharacter.play();
         }
-      enemy.lastCollision = currentTime;
+        enemy.lastCollision = currentTime;
       }
     });
   }
 
   /**
-   * check collision with Coin on map.
+   * Checks collisions between the character and coins.
    */
   checkCollisonWithCoin() {
     this.coins.forEach((coin, i) => {
@@ -211,7 +229,7 @@ class World {
   }
 
   /**
-   * check collision with bottle on map.
+   * Checks collisions between the character and bottles.
    */
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
@@ -230,7 +248,7 @@ class World {
   }
 
   /**
-   * check collision between throwed bottle and chicken.
+   * Checks collisions between thrown bottles and chickens.
    */
   checkCollisonChickenWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
@@ -250,7 +268,7 @@ class World {
   }
 
   /**
-   * check collision between throwed bottle and small chicken.
+   * Checks collisions between thrown bottles and small chickens.
    */
   checkCollisonSmallChickenWithBottle() {
     this.thorwableObjects.forEach((bottle) => {
@@ -270,7 +288,8 @@ class World {
   }
 
   /**
-   * check collision between throwed bottle and Endboss.
+   * Checks collisions between thrown bottles and the endboss.
+   * @param {number} currentTime - The current time in milliseconds.
    */
   checkCollisonBossWithBottle(currentTime) {
     this.thorwableObjects.forEach((bottle) => {
@@ -279,8 +298,8 @@ class World {
           const alreadyHit = currentTime - enemy.lastCollision < 1000;
           if (alreadyHit) return;
           enemy.hitEnemy();
-          bottle.splash();  
-          
+          bottle.splash();
+
           this.statusBar[3].hitEndboss(this.hitCount);
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
@@ -295,7 +314,7 @@ class World {
   }
 
   /**
-   * drawing collected objects/images on the canvas.
+   * Draws the game world and all its objects onto the canvas.
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -324,7 +343,8 @@ class World {
   }
 
   /**
-   * drawing collected objects/images on the canvas.
+   * Adds multiple objects to the map.
+   * @param {MovableObject[]} objects - An array of objects to add to the map.
    */
   addObjectsToMap(objects) {
     objects.forEach((o) => {
@@ -333,7 +353,8 @@ class World {
   }
 
   /**
-   * drawing collected objects/images on the canvas.
+   * Adds a single movable object to the map, handling direction (flipping).
+   * @param {MovableObject} mo - The object to add to the map.
    */
   addToMap(mo) {
     if (mo.otherDirection) {
@@ -347,7 +368,8 @@ class World {
   }
 
   /**
-   * flip Image so that character points in the right direction.
+   * Flips an object's image horizontally.
+   * @param {MovableObject} mo - The object whose image to flip.
    */
   flipImage(mo) {
     this.ctx.save();
@@ -357,7 +379,8 @@ class World {
   }
 
   /**
-   * flip character image in reverse direction.
+   * Restores an object's image to its original (unflipped) state.
+   * @param {MovableObject} mo - The object whose image to restore.
    */
   flipImageBack(mo) {
     mo.x = mo.x * -1;

@@ -1,3 +1,7 @@
+/**
+ * Base class for all objects that can move in the game world.
+ * Extends the "DrawableObject".
+ */
 class MovableObject extends DrawableObject {
   speed = 0.15;
   otherDirection;
@@ -12,7 +16,7 @@ class MovableObject extends DrawableObject {
   };
 
   /**
-   * give the character a gravity so that he returns to the ground after jumping.
+   * Applies gravity to the object, making it fall when not on the ground.
    */
   applyGravity() {
     setInterval(() => {
@@ -24,7 +28,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * check if the character is on the ground.
+   * Checks if the object is above the ground.
+   * @returns {boolean} True if the object is above the ground, false otherwise.
    */
   isAboveGround() {
     if (this instanceof ThorwableObject) {
@@ -35,7 +40,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * display the images in the cache.
+   * Plays an animation for the object using a sequence of images.
+   * @param {string[]} images - Array of image paths for the animation.
    */
   playAnimate(images) {
     let i = this.currentImage % images.length;
@@ -44,12 +50,14 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
- /**
-   * it plays the Animation once time in the cache.
+  /**
+   * Plays an animation for the object once using a sequence of images.
+   * Clears the interval after the animation finishes.
+   * @param {string[]} images - Array of image paths for the animation.
    */
-  playAnimationOnce(images) {    
+  playAnimationOnce(images) {
     setInterval(() => {
-      if(this.currentImage == images.length) {
+      if (this.currentImage == images.length) {
         clearInterval();
         return;
       }
@@ -59,31 +67,33 @@ class MovableObject extends DrawableObject {
       this.currentImage++;
     }, 50);
   }
-  
 
   /**
-   * make all movable objects run to the right.
+   * Moves the object to the right.
    */
   moveRight() {
     this.x += this.speed;
   }
 
   /**
-   * make all movable objects run left.
+   * Moves the object to the left.
    */
   moveLeft() {
     this.x -= this.speed;
   }
 
   /**
-   * make character jump.
+   * Makes the object jump by setting its y-axis movement speed.
    */
   jump() {
     this.speedY = 15;
   }
 
   /**
-   * check if character, enemys or objects collide with each other.
+   *Checks for collision between this object and another movable object.
+   *Uses offset values ​​for more accurate collision detection based on the object's image
+   *@param {MovableObject} mo - The other movable object to check for collision with.
+   * @returns {boolean} True if there is a collision, false otherwise.
    */
   isColliding(mo) {
     return (
@@ -95,7 +105,9 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * check if character hits the enemy.
+   * Checks if the character is touching an enemy (simplified vertical collision checking).
+   * @param {MovableObject} mo - The enemy to check for vertical touch against.
+   * @returns {boolean} True if there is a vertical touch, false otherwise.
    */
   charHitEnemy(mo) {
     return (
@@ -105,7 +117,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * what should happen to the character when he is hit.
+   * Deals damage to the object and reduces its energy.
    */
   hit() {
     this.energy -= 20;
@@ -117,7 +129,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * whether character is injured.
+   * Checks if the object has just taken damage (temporarily invulnerable).
+   * @returns {boolean} True if the object is invulnerable, false otherwise.
    */
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
@@ -126,7 +139,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * whether character is dead.
+   * Checks if the object is dead (no energy left).
+   * Calls the gameOver() function if the object is dead
    */
   isDead() {
     if (this.energy == 0) {
@@ -135,7 +149,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * makes the character walk.
+   * Handles character movement based on keyboard inputs (right/left).
    */
   charWalking() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -155,10 +169,10 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   * makes the character jump.
+   * Handles character jumping based on the space bar.
    */
   charJumping() {
-    if (this.world.keyboard.SPACE) {      
+    if (this.world.keyboard.SPACE) {
       if (this.y > 225) {
         this.jump();
         if (!world.isMuted) {

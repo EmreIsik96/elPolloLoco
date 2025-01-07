@@ -1,3 +1,7 @@
+/**
+ * Represents the final boss enemy.
+ * Extends the "MovableObject".
+ */
 class Endboss extends MovableObject {
   height = 350;
   width = 250;
@@ -7,9 +11,6 @@ class Endboss extends MovableObject {
   maxX = 720 * 5.5;
   maxHits = 5;
 
-  /**
-   * IMAGES array from Endboss.
-   */
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -50,7 +51,8 @@ class Endboss extends MovableObject {
   };
 
   /**
-   * load animate Images from Endboss.
+   * Creates a new Endboss object.
+   * Loads images, sets initial position and speed, and starts the animation.
    */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
@@ -63,10 +65,13 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Animates the endboss's movement and animations.
+   */
   animate() {
     /**
-   * If character is not dead, run and jump functions are performed when pressing the keys.
-   */
+     * If character is not dead, run and jump functions are performed when pressing the keys.
+     */
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
@@ -75,8 +80,8 @@ class Endboss extends MovableObject {
     }, 1000 / 60);
 
     /**
-   * If character is not dead, run and jump images are played when pressing the keys.
-   */
+     * If character is not dead, run and jump images are played when pressing the keys.
+     */
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimate(this.IMAGES_WALKING);
@@ -85,7 +90,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   * move Endboss.
+   * Moves the endboss back and forth within a defined range.
    */
   moveEndboss() {
     setTimeout(() => {
@@ -103,7 +108,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   * Let the final boss run to the left towards the character.
+   * Moves the endboss forward (to the right).
    */
   moveForward() {
     this.speed = Math.random() * 7;
@@ -111,7 +116,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   * Let the final boss run to the right away from character.
+   * Moves the endboss backward (to the left).
    */
   moveBackward() {
     this.speed = Math.random() * 7;
@@ -119,7 +124,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   * If Endboss is not dead, count the hits from Endboss.
+   * Handles the endboss being hit. Plays the hurt animation and checks for death.
    */
   hitEnemy() {
     if (this.isDead) return;
@@ -142,9 +147,9 @@ class Endboss extends MovableObject {
       }, 1000);
     }
   }
-
+  
   /**
-   * Endboss is dead, load and show the Dead Images.
+   * Handles the endboss's death. Plays the death animation.
    */
   dieEnemy() {
     this.speed = 0;

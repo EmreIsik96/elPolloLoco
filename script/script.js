@@ -3,7 +3,14 @@ let charIsDead = false;
 let bossIsDead = false;
 
 /**
- * Here the start is triggered, levels, enemies and all objects are executed and placed with the start .
+ * Starts the game by:
+ *  - Resetting the character death flag.
+ *  - Hiding the start screen.
+ *  - Showing the game container.
+ *  - Hiding the mobile start button (if applicable).
+ *  - Playing the start game audio.
+ *  - After a short delay (500ms), initializes the level and the game itself.
+ *  - Shows the mute and fullscreen buttons.
  */
 function startGame() {
   charIsDead = false;
@@ -20,7 +27,7 @@ function startGame() {
 }
 
 /**
- * full screen is opened.
+ * Attempts to enter fullscreen mode for the game canvas element.
  */
 function fullscreen() {
   let fullscreen = document.getElementById("canvas");
@@ -28,7 +35,8 @@ function fullscreen() {
 }
 
 /**
- * full screen is opened.
+ * Helper function for fullscreen(). Checks for different browser implementations of the fullscreen request API.
+ * @param {HTMLElement} element The element to make fullscreen.
  */
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
@@ -41,7 +49,7 @@ function enterFullscreen(element) {
 }
 
 /**
- * close the fullscreen.
+ * Exits fullscreen mode and hides the fullscreen image, showing the shrink image instead.
  */
 function closeFullscreen() {
   document.getElementById("fullscreenImgID").style.display = "block";
@@ -50,7 +58,7 @@ function closeFullscreen() {
 }
 
 /**
- * close the fullscreen.
+ * Helper function for closeFullscreen(). Checks for different browser implementations of the fullscreen exit API.
  */
 function exitFullscreen() {
   if (document.exitFullscreen) {
@@ -62,7 +70,7 @@ function exitFullscreen() {
 }
 
 /**
- * the instructions are hereby displayed.
+ * Shows the game instructions screen and hides the start screen elements.
  */
 function instructions() {
   document.getElementById("start-image").style.display = "none";
@@ -75,7 +83,7 @@ function instructions() {
 }
 
 /**
- * the instructions are hereby closed.
+ * Hides the instructions screen and shows the start screen elements again.
  */
 function backFromInstructions() {
   document.getElementById("start-image").style.display = "block";
@@ -87,7 +95,7 @@ function backFromInstructions() {
 }
 
 /**
- * the imprint is hereby displayed.
+ * Shows the game imprint screen and hides the start screen elements.
  */
 function imprint() {
   document.getElementById("start-image").style.display = "none";
@@ -99,7 +107,7 @@ function imprint() {
 }
 
 /**
- * the imprint is hereby closed.
+ * Hides the imprint screen and shows the start screen elements again.
  */
 function backFromImprint() {
   document.getElementById("start-image").style.display = "block";
@@ -111,14 +119,20 @@ function backFromImprint() {
 }
 
 /**
- * This will clear all current intervals.
+ * Clears all setInterval timers used in the game loop.
+ * This is crucial to prevent unexpected behavior after game over or win scenarios.
  */
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
 /**
- * here the game over is displayed.
+ * Handles the game over scenario:
+ *  - Clears all intervals to stop the game loop.
+ *  - Sets the `charIsDead` flag to true.
+ *  - Plays the game over audio and pauses the start game audio (if not muted).
+ *  - Hides the game container.
+ *  - Shows the game over screen.
  */
 function gameOver() {
   clearAllIntervals();
@@ -132,7 +146,12 @@ function gameOver() {
 }
 
 /**
- * here the win game is displayed.
+ * Handles the win scenario:
+ *  - Clears all intervals to stop the game loop.
+ *  - Sets the `bossIsDead` flag to true.
+ *  - Plays the win game audio and pauses the start game audio (if not muted).
+ *  - Shows the win screen.
+ *  - Hides the game container.
  */
 function winGame() {
   clearAllIntervals();
@@ -146,7 +165,15 @@ function winGame() {
 }
 
 /**
- * this will restart the game.
+ * Restarts the game after a win or loss:
+ *  - Preserves the current mute state.
+ *  - Resets the character death flag.
+ *  - Hides the game over/win screens.
+ *  - Shows the game container.
+ *  - Resets the start game audio playback time.
+ *  - Plays the start game audio (if not muted).
+ *  - Re-initializes the level and the game.
+ * @param {boolean} isMuted - The mute state to restore.
  */
 function restartGame() {
   let isMuted = world.isMuted;
@@ -164,7 +191,11 @@ function restartGame() {
 }
 
 /**
- * this will go back to Main Menu.
+ * Returns the player to the home/start screen after a win or loss:
+ *  - Hides the game over/win screens.
+ *  - Hides the game container.
+ *  - Shows the start screen.
+ *  - Shows the mobile start button.
  */
 function backToHome() {
   document.getElementById("gameOver-screen").style.display = "none";
@@ -175,10 +206,13 @@ function backToHome() {
 }
 
 /**
- * here the audio is muted.
+ * Toggles the mute state of the game:
+ *  - Inverts the `world.isMuted` flag.
+ *  - Plays or pauses the start game audio based on the new mute state.
+ *  - Toggles the visibility of the mute/unmute icons.
  */
 function muteSound() {
-  world.isMuted = !world.isMuted;  
+  world.isMuted = !world.isMuted;
   if (!world.isMuted) {
     soundCollection.sounds.startGameAudio.play();
   } else {
@@ -191,10 +225,13 @@ function muteSound() {
 }
 
 /**
- * here the audio is unmuted.
+ * Unmutes the game:
+ *  - Inverts the `world.isMuted` flag.
+ *  - Plays the start game audio if it was muted.
+ *  - Updates the mute/unmute button visibility.
  */
 function unmuteSound() {
-  world.isMuted = !world.isMuted;  
+  world.isMuted = !world.isMuted;
   if (!world.isMuted) {
     soundCollection.sounds.startGameAudio.play();
   } else {
@@ -203,5 +240,3 @@ function unmuteSound() {
   document.getElementById("unmuteButtonID").style.display = "none";
   document.getElementById("muteButtonID").style.display = "block";
 }
-  
-  

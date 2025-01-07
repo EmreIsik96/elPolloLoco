@@ -1,29 +1,35 @@
+/**
+ * Represents a drawable object that can be displayed on a canvas.
+ */
 class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
 
   /**
-   * load one standard Image.
+   * Loads a single image from the specified path.
+   * @param {string} path - The path to the image file.
    */
   loadImage(path) {
     this.img = new Image(); // this.img = document.getElementById('image') // Erstellt ein neues HTMLImageElement (Bild-Objekt)
     this.img.src = path; // <img id="image" src> // // Weist dem Bild den Pfad zur Bilddatei zu
   }
 
-    /**
-   * load all Images in array.
+  /**
+   * Loads multiple images from an array of paths and caches them.
+   * @param {string[]} arr - An array of image file paths.
    */
   loadImages(arr) {
     arr.forEach((path) => {
-      let images = new Image();  // Erstellt für jedes Bild im Array ein neues Bildobjekt
-      images.src = path;  // Weist jedem Bildobjekt den jeweiligen Pfad zu
-      this.imageCache[path] = images; // Speichert das Bild im 'imageCache'-Objekt unter dem Pfad als Schlüssel
+      let images = new Image();
+      images.src = path;
+      this.imageCache[path] = images;
     });
   }
 
   /**
-   * draw Images on Map/World.
+   * Draws the current image on the canvas context.
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
    */
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);

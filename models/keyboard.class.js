@@ -1,3 +1,6 @@
+/**
+ * Handles keyboard and mobile button input for the game.
+ */
 class Keyboard {
   LEFT = false;
   RIGHT = false;
@@ -5,12 +8,9 @@ class Keyboard {
   SPACE = false;
   F = false;
   lastPressedKey = 0;
-  
+
   /**
-   * Creates an instance of the Keyboard class.
-   * Initializes keyboard and mobile button event listeners.
-   *
-   * @constructor
+   * Creates a new Keyboard object and sets up event listeners for keyboard and mobile buttons.
    */
   constructor() {
     this.keyboardEvents();
@@ -18,7 +18,7 @@ class Keyboard {
   }
 
   /**
-   * Sets up keyboard events for key presses and releases.
+   * Sets up event listeners for keyboard key presses and releases.
    */
   keyboardEvents() {
     window.addEventListener("keydown", (event) => {
@@ -63,27 +63,37 @@ class Keyboard {
   }
 
   /**
-   * Sets up keyboard for Smartphone.
+   * Sets up event listeners for touch events on mobile buttons.
    */
   mobileButtonEvents() {
     this.lastPressedKey = new Date().getTime();
-    document.getElementById("left_btn").addEventListener("touchstart", (event) => {
+    document
+      .getElementById("left_btn")
+      .addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.LEFT = true;
       });
-    document.getElementById("left_btn").addEventListener("touchend", (event) => {
+    document
+      .getElementById("left_btn")
+      .addEventListener("touchend", (event) => {
         event.preventDefault();
         this.LEFT = false;
       });
-    document.getElementById("right_btn").addEventListener("touchstart", (event) => {
+    document
+      .getElementById("right_btn")
+      .addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.RIGHT = true;
       });
-    document.getElementById("right_btn").addEventListener("touchend", (event) => {
+    document
+      .getElementById("right_btn")
+      .addEventListener("touchend", (event) => {
         event.preventDefault();
         this.RIGHT = false;
       });
-    document.getElementById("up_btn").addEventListener("touchstart", (event) => {
+    document
+      .getElementById("up_btn")
+      .addEventListener("touchstart", (event) => {
         event.preventDefault();
         this.SPACE = true;
       });

@@ -1,12 +1,13 @@
+/**
+ * Represents the status bar for the endboss's health.
+ * Extends the "DrawableObject".
+ */
 class EndbossBar extends DrawableObject {
   x = 500;
   y = 80;
   height = 60;
   width = 200;
 
-  /**
-   * collect Endboss Statusbar Images.
-   */
   IMAGES_ENDBOSS_BAR = [
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
@@ -17,7 +18,8 @@ class EndbossBar extends DrawableObject {
   ];
 
   /**
-   * load Endboss Statusbar Images.
+   * Creates a new EndbossBar object.
+   * Loads the status bar images and initially sets the bar based on the endboss's hit count.
    */
   constructor() {
     super();
@@ -25,8 +27,9 @@ class EndbossBar extends DrawableObject {
     this.hitEndboss();
   }
 
-   /**
-   * count the hit on Endboss.
+  /**
+   * Updates the endboss bar based on the endboss's current hit count.
+   * Relies on `level1.endboss` being defined.
    */
   hitEndboss() {
     this.hitCount = level1.endboss[0].hitCount;
@@ -34,8 +37,9 @@ class EndbossBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
-   /**
-   * change Statusbar Images while hit Endboss.
+  /**
+   * Resolves the correct image index based on the endboss's hit count.
+   * @returns {number} The index of the image in the IMAGES_ENDBOSS_BAR array.
    */
   resolveImageIndex() {
     if (this.hitCount > 5) {

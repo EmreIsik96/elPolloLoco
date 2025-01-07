@@ -1,6 +1,8 @@
 let level1;
 /**
- * all Enemys, and Background Objects are initialized here .
+ * Initializes the first game level by creating enemies, the endboss, clouds,  
+ * and background objects. The background is structured to create a seamless  
+ * scrolling effect.
  */
 function initLevel() {
   level1 = new Level(

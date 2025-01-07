@@ -1,23 +1,27 @@
-class Coins extends DrawableObject{
-    x = 100;
-    y = 300;
-    height = 160;
-    width = 160;
-    offset = {
-        top: 120,
-        bottom: 30,
-        right: 40,
-        left: 40,
-    }
+/**
+ * Represents a coin object that can be collected.
+ * Extends the "DrawableObject".
+ */
+class Coins extends DrawableObject {
+  x = 100;
+  y = 300;
+  height = 160;
+  width = 160;
+  offset = {
+    top: 120,
+    bottom: 30,
+    right: 40,
+    left: 40,
+  };
 
-    /**
-   * place coins random on map.
+  /**
+   * Creates a new Coins object.
+   * Loads the coin image and sets random x and y coordinates.
    */
-    constructor()
-    {
-        super();
-        this.loadImage('img/8_coin/coin_1.png');
-        this.x = 200 + Math.random() * 720 * 4; // Zufällige X-Koordinate
-        this.y = 120 + Math.random() * 50;     // Zufällige Y-Koordinate
-    }
+  constructor() {
+    super();
+    this.loadImage("img/8_coin/coin_1.png");
+    this.x = 200 + Math.random() * 720 * 4; // Zufällige X-Koordinate
+    this.y = 120 + Math.random() * 50; // Zufällige Y-Koordinate
+  }
 }

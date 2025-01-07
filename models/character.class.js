@@ -1,3 +1,8 @@
+/**
+ * Represents the main character in the game.
+ * Handles movement, animations, and interactions with the world.
+ * Inherits from "MovableObject".
+ */
 class Character extends MovableObject {
   x = 120;
   y = 80;
@@ -7,9 +12,6 @@ class Character extends MovableObject {
   energy = 100;
   keyPressed = true;
 
-  /**
-   * IMAGES array from Character.
-   */
   IMAGES_STAY = [
     "img/2_character_pepe/1_idle/idle/I-1.png",
     "img/2_character_pepe/1_idle/idle/I-2.png",
@@ -75,7 +77,7 @@ class Character extends MovableObject {
   };
 
   /**
-   * load animate Images from Character.
+   * Initializes the character with default images and physics.
    */
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
@@ -90,13 +92,9 @@ class Character extends MovableObject {
   }
 
   /**
-   * play animate Images from Character.
+   * Controls character movement and animations.
    */
   animate() {
-    
-    /**
-     * If character is not dead, run and jump functions are performed when pressing the keys.
-     */
     setInterval(() => {
       if (charIsDead) {
         return;
@@ -106,9 +104,6 @@ class Character extends MovableObject {
       this.world.camera_x = -this.x + 250;
     });
 
-    /**
-     * If character is not dead, run and jump images are played when pressing the keys.
-     */
     setInterval(() => {
       if (charIsDead) {
         return;

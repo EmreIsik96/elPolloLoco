@@ -1,3 +1,8 @@
+/**
+ * Represents the bottle status bar in the game.
+ * Displays different images based on the number of collected bottles.
+ * Inherits from "DrawableObject".
+ */
 class BottleBar extends DrawableObject {
   x = 30;
   y = 0;
@@ -17,8 +22,8 @@ class BottleBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
   ];
 
-   /**
-   * run functions.
+  /**
+   * Initializes the bottle bar by loading images and setting the default value.
    */
   constructor() {
     super();
@@ -26,8 +31,9 @@ class BottleBar extends DrawableObject {
     this.setCollectedBottles(0);
   }
 
-   /**
-   * count collected Bottles.
+  /**
+   * Updates the bottle bar based on the collected bottles.
+   * @param {number} amountOfBottles - The number of collected bottles.
    */
   setCollectedBottles(amountOfBottles) {
     this.y = 100;
@@ -36,8 +42,9 @@ class BottleBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
-   /**
-   * change Statusbar Images while collecting Bottles.
+  /**
+   * Determines the correct image index based on the number of collected bottles.
+   * @returns {number} The index of the corresponding status image.
    */
   resolveImageIndex() {
     if (this.collectedBottles > 5) {

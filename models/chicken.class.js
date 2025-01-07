@@ -1,14 +1,16 @@
+/**
+ * Represents a normal chicken enemy in the game.
+ * Chickens move left and can be defeated after a certain number of hits.
+ * Inherits from "MovableObject".
+ */
 class Chicken extends MovableObject {
   height = 70;
   width = 70;
   y = 360;
   hitCount = 0;
-  maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
+  maxHits = 3;
   dyingNormalChicken = "img/3_enemies_chicken/chicken_normal/2_dead/dead.png";
 
-  /**
-   * Collect Images from Chicken.
-   */
   IMAGES_WALKING_NORMAL_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
@@ -16,7 +18,7 @@ class Chicken extends MovableObject {
   ];
 
   /**
-   * load animate Images from Chicken and place them random on world.
+   * Initializes a chicken with a random position and movement speed.
    */
   constructor() {
     super().loadImage(this.IMAGES_WALKING_NORMAL_CHICKEN[0]);
@@ -29,13 +31,9 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *  play animate Images from Chicken.
+   * Animates the chicken's movement and walking cycle.
    */
   animate() {
-    
-    /**
-     * If character is not dead, move left for all chicken.
-     */
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
@@ -43,9 +41,6 @@ class Chicken extends MovableObject {
       }
     }, 1000 / 60);
 
-    /**
-     * If character is not dead, play move Images from Chicken.
-     */
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimate(this.IMAGES_WALKING_NORMAL_CHICKEN);
@@ -54,13 +49,11 @@ class Chicken extends MovableObject {
   }
 
   /**
-   * If Chicken is not dead, count the hits from Chicken.
+   * Registers a hit on the chicken and checks if it should be defeated.
    */
   hitEnemy() {
     if (this.isDead) return;
-
     this.hitCount++;
-
     if (this.hitCount >= this.maxHits) {
       this.isDead = true;
       this.dieEnemy();
@@ -68,7 +61,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   * Chicken is dead, load and show the Dead Images.
+   * Kills the chicken by stopping movement and changing its image.
    */
   dieEnemy() {
     this.isDead = true;

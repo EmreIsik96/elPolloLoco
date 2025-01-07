@@ -1,14 +1,15 @@
+/**
+ * Represents a small chicken enemy.
+ * Extends the MovableObject class.
+ */
 class SmallChicken extends MovableObject {
   height = 70;
   width = 70;
   y = 360;
   hitCount = 0;
-  maxHits = 3; // Anzahl der Treffer, bis der Gegner stirbt
+  maxHits = 3;
   dyingSmallChicken = "img/3_enemies_chicken/chicken_small/2_dead/dead.png";
 
-  /**
-   * Collect Images from Small Chicken.
-   */
   IMAGES_WALKING_SMALL_CHICKEN = [
     "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
@@ -16,7 +17,8 @@ class SmallChicken extends MovableObject {
   ];
 
   /**
-   * load animate Images from Small Chicken and place them random on world.
+   * Creates a new SmallChicken object.
+   * Loads images, sets initial position and speed, and starts the animation.
    */
   constructor() {
     super().loadImage(this.IMAGES_WALKING_SMALL_CHICKEN[0]);
@@ -29,12 +31,9 @@ class SmallChicken extends MovableObject {
   }
 
   /**
-   *  play animate Images from Small Chicken.
+   * Animates the small chicken's movement and animations.
    */
   animate() {
-    /**
-     * If character is not dead, move left for all Small Chicken.
-     */
     setInterval(() => {
       if (charIsDead) return;
       if (!this.isDead) {
@@ -42,9 +41,6 @@ class SmallChicken extends MovableObject {
       }
     }, 1000 / 60);
 
-    /**
-     * If character is not dead, play move Images from Small Chicken.
-     */
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimate(this.IMAGES_WALKING_SMALL_CHICKEN);
@@ -53,7 +49,7 @@ class SmallChicken extends MovableObject {
   }
 
   /**
-   * If Small Chicken is not dead, count the hits from Small Chicken.
+   * Animates the small chicken's movement and animations.
    */
   hitEnemy() {
     if (this.isDead) return;
@@ -67,7 +63,7 @@ class SmallChicken extends MovableObject {
   }
 
   /**
-   * Small chicken is dead, load and show the Dead Images.
+   * Handles the small chicken's death. Loads the dying image and stops movement.
    */
   dieEnemy() {
     this.isDead = true;

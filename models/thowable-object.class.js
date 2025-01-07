@@ -1,7 +1,8 @@
+/**
+ * Represents a throwable bottle object.
+ * Extends the "MovableObject".
+ */
 class ThorwableObject extends MovableObject {
-  /**
-   * collect Rotations Images when throwing the bottle.
-   */
   IMAGES_BOTTLE = [
     "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
@@ -21,7 +22,10 @@ class ThorwableObject extends MovableObject {
   intervalID;
 
   /**
-   * load Rotations Images when throwing the bottle.
+   * Creates a new ThorwableObject instance.
+   * Loads images, sets position and size, and initiates the throw.
+   * @param {number} x - The initial x-coordinate of the bottle.
+   * @param {number} y - The initial y-coordinate of the bottle.
    */
   constructor(x, y) {
     super().loadImage(
@@ -37,7 +41,8 @@ class ThorwableObject extends MovableObject {
   }
 
   /**
-   * throw Bottle Function.
+   * Throws the bottle. Applies gravity, sets horizontal movement based on character direction, and starts the rotation animation.
+   * Relies on "world.character" being defined.
    */
   throw() {
     let characterDirection = world.character.otherDirection;
@@ -58,7 +63,7 @@ class ThorwableObject extends MovableObject {
   }
 
   /**
-   * splash Bottle Function.
+   * Plays the splash animation and clears the rotation animation interval.
    */
   splash() {
     clearInterval(this.intervalID);
