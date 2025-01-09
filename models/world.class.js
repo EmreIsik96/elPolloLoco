@@ -12,13 +12,10 @@ class World {
   keyboard;
   world;
   camera_x = 0;
-  statusBar = [
-    new HealthBar(),
-    new CoinBar(),
-    new BottleBar(),
-    new EndbossBar(),
-  ];
+  statusBar = [new HealthBar(), new CoinBar(), new BottleBar()];
+  endbossBar = [new EndbossBar()];
   thorwableObjects = [];
+  bottleThrown = false;
   coins = [];
   collectedCoin = 0;
   collectedBottles = 0;
@@ -26,6 +23,8 @@ class World {
   bottles = [];
   isMuted = false;
   soundCollection = new SoundCollection();
+  lastThrowTime = 0; 
+  throwCooldown = 500;
 
   /**
    * Creates a new World instance.
@@ -57,8 +56,8 @@ class World {
     setInterval(() => {
       if (charIsDead) return;
       const currentTime = new Date().getTime();
-      this.checkThrowObjects();
       this.checkCollisonWithChicken(currentTime);
+      this.checkThrowObjects();
       this.checkCollisonWithSmallChicken(currentTime);
     }, 100);
     setInterval(() => {
@@ -89,7 +88,8 @@ class World {
    * Checks if the character throws objects (F key) and creates a new "ThorwableObject" if appropriate.
    */
   checkThrowObjects() {
-    if (this.keyboard.F && this.collectedBottles > 0) {
+    let currentTime = Date.now();
+    if (this.keyboard.F && this.collectedBottles > 0 && currentTime - this.lastThrowTime > this.throwCooldown) {
       let bottle = new ThorwableObject(
         this.character.x + 50,
         this.character.y + 100
@@ -97,6 +97,7 @@ class World {
       this.thorwableObjects.push(bottle);
       this.collectedBottles--;
       this.statusBar[2].setCollectedBottles(this.collectedBottles);
+      this.lastThrowTime = currentTime;
     }
   }
 
@@ -300,7 +301,7 @@ class World {
           enemy.hitEnemy();
           bottle.splash();
 
-          this.statusBar[3].hitEndboss(this.hitCount);
+          this.endbossBar[0].hitEndboss(this.hitCount);
           if (!this.isMuted) {
             this.soundCollection.sounds.brokenBottle.play();
             setTimeout(() => {
@@ -324,6 +325,9 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     this.addObjectsToMap(this.statusBar);
+    if (this.character.x > 720 * 4.2) {
+      this.addObjectsToMap(this.endbossBar);
+    }
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.chicken);

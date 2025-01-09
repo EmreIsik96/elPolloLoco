@@ -10,6 +10,7 @@ class Endboss extends MovableObject {
   minX = 720 * 4.5;
   maxX = 720 * 5.5;
   maxHits = 5;
+  hadFirstContact = false;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -43,6 +44,26 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/5_dead/G25.png",
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
+  IMAGES_ALERT = [
+    "img/4_enemie_boss_chicken/2_alert/G5.png",
+    "img/4_enemie_boss_chicken/2_alert/G6.png",
+    "img/4_enemie_boss_chicken/2_alert/G7.png",
+    "img/4_enemie_boss_chicken/2_alert/G8.png",
+    "img/4_enemie_boss_chicken/2_alert/G9.png",
+    "img/4_enemie_boss_chicken/2_alert/G10.png",
+    "img/4_enemie_boss_chicken/2_alert/G11.png",
+    "img/4_enemie_boss_chicken/2_alert/G12.png"
+  ];
+  IMAGES_ATTACK = [
+    "img/4_enemie_boss_chicken/3_attack/G13.png",
+    "img/4_enemie_boss_chicken/3_attack/G14.png",
+    "img/4_enemie_boss_chicken/3_attack/G15.png",
+    "img/4_enemie_boss_chicken/3_attack/G16.png",
+    "img/4_enemie_boss_chicken/3_attack/G17.png",
+    "img/4_enemie_boss_chicken/3_attack/G18.png",
+    "img/4_enemie_boss_chicken/3_attack/G19.png",
+    "img/4_enemie_boss_chicken/3_attack/G20.png",
+  ];
   offset = {
     top: 120,
     bottom: 30,
@@ -55,12 +76,14 @@ class Endboss extends MovableObject {
    * Loads images, sets initial position and speed, and starts the animation.
    */
   constructor() {
-    super().loadImage(this.IMAGES_WALKING[0]);
+    super().loadImage(this.IMAGES_ALERT[0]);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_ALERT);
+    this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_DEAD);
     this.speed = 1;
-    this.x = 720 * 5.5;
+    this.x = 720 * 5;
     this.isDead = false;
     this.animate();
   }
@@ -69,42 +92,46 @@ class Endboss extends MovableObject {
    * Animates the endboss's movement and animations.
    */
   animate() {
+    let i = 0;
     /**
-     * If character is not dead, run and jump functions are performed when pressing the keys.
+     * If character is not dead, walk functions are performed when pressing the keys.
      */
     setInterval(() => {
       if (charIsDead) return;
-      if (!this.isDead) {
+      if (!this.isDead && i > 3 && this.hadFirstContact) {
         this.moveEndboss();
       }
     }, 1000 / 60);
 
     /**
-     * If character is not dead, run and jump images are played when pressing the keys.
+     * If character is not dead, walk images are played when pressing the keys.
      */
-    setInterval(() => {
-      if (!this.isDead) {
+    setInterval(() => {     
+      if (world.character.x > 720 * 4.5 && !this.hadFirstContact) {
+        i = 0;
+        this.hadFirstContact = true;
+      }
+      if (!this.isDead && i > 3 && this.hadFirstContact) {
         this.playAnimate(this.IMAGES_WALKING);
       }
-    }, 200);
+      i++;
+    }, 260);
   }
 
   /**
    * Moves the endboss back and forth within a defined range.
    */
   moveEndboss() {
-    setTimeout(() => {
-      if (this.x <= this.minX) {
-        this.otherDirection = true;
-      } else if (this.x >= this.maxX) {
-        this.otherDirection = false;
-      }
-      if (this.otherDirection) {
-        this.moveForward();
-      } else {
-        this.moveBackward();
-      }
-    }, 7000);
+    if (this.x <= this.minX) {
+      this.otherDirection = true;
+    } else if (this.x >= this.maxX) {
+      this.otherDirection = false;
+    }
+    if (this.otherDirection) {
+      this.moveForward();
+    } else {
+      this.moveBackward();
+    }
   }
 
   /**
@@ -157,16 +184,12 @@ class Endboss extends MovableObject {
     let currentImageIndex = 0;
 
     let interval = setInterval(() => {
-      // erstellt eine Variable, um den Interval später abzurufen und abzubrechen
+      this.loadImage(this.IMAGES_DEAD[currentImageIndex]); 
+      currentImageIndex++;
 
-      this.loadImage(this.IMAGES_DEAD[currentImageIndex]); // Es wird immer 1 Bild nacheinander abgerufen, da bei jedem durchlauf CurrentImageIndex um 1 erhöht wird.
-      currentImageIndex++; // CurrentImage wird mit jeden durchgang um 1 erhöht.
-
-      // Stoppt die Animation, wenn alle Bilder durch sind
       if (currentImageIndex >= this.IMAGES_DEAD.length) {
-        // vergleichen von CurrentImageIndex und Array.length bis der currentImageIndex die length des Arrays erreicht
-        clearInterval(interval); // Animation stoppen
+        clearInterval(interval); 
       }
-    }, 200); // Zeitintervall zwischen den Bildern
+    }, 200); 
   }
 }

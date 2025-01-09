@@ -1,7 +1,7 @@
 /**
  * Represents a drawable object that can be displayed on a canvas.
  */
-class DrawableObject {
+class DrawableObject{
   img;
   imageCache = {};
   currentImage = 0;
