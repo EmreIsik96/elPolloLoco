@@ -96,40 +96,28 @@ class Character extends MovableObject {
    */
   animate() {
     setInterval(() => {
-      if (charIsDead) {
-        return;
-      }
+      if (charIsDead) return;
       this.charWalking();
       this.charJumping();
       this.world.camera_x = -this.x + 250;
     });
 
     setInterval(() => {
-      if (charIsDead) {
-        return;
-      }
+      if (charIsDead) return;
+
+      let keyboard = this.world.keyboard;
+      let timePassed = (new Date().getTime() - keyboard.lastPressedKey) / 1000;
+
       if (this.isDead()) {
         this.playAnimate(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
         this.playAnimate(this.IMAGES_HURT);
-      } else if (this.isAboveGround()) {
+      } else if (keyboard.SPACE || this.isAboveGround()) {
         this.playAnimate(this.IMAGES_JUMPING);
+      } else if (keyboard.RIGHT || keyboard.LEFT) {
+        this.playAnimate(this.IMAGES_WALKING);
       } else {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          this.playAnimate(this.IMAGES_WALKING);
-        } else {
-          let timePassed =
-            new Date().getTime() - this.world.keyboard.lastPressedKey;
-          timePassed = timePassed / 1000;
-          if (timePassed > 4.0) {
-            this.playAnimate(this.IMAGES_SLEEPING);
-          } else {
-            this.playAnimate(this.IMAGES_STAY);
-          }
-        }
-        if (this.world.keyboard.SPACE) {
-          this.playAnimate(this.IMAGES_JUMPING);
-        }
+        this.playAnimate(timePassed > 4.0 ? this.IMAGES_SLEEPING : this.IMAGES_STAY);
       }
     }, 100);
   }
