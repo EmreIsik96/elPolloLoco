@@ -97,6 +97,7 @@ class Character extends MovableObject {
   animate() {
     setInterval(() => {
       if (charIsDead) return;
+      
       this.charWalking();
       this.charJumping();
       this.world.camera_x = -this.x + 250;
