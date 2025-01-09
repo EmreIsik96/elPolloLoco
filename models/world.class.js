@@ -23,7 +23,7 @@ class World {
   bottles = [];
   isMuted = false;
   soundCollection = new SoundCollection();
-  lastThrowTime = 0; 
+  lastThrowTime = 0;
   throwCooldown = 500;
 
   /**
@@ -49,23 +49,17 @@ class World {
     setInterval(() => {
       if (charIsDead) return;
       const currentTime = new Date().getTime();
-      this.checkCollisonWithEndboss(currentTime);
-      this.checkCollisonChickenWithBottle();
-      this.checkCollisonSmallChickenWithBottle();
+      this.checkCollisionsSetInterval280ms(currentTime);
     }, 280);
     setInterval(() => {
       if (charIsDead) return;
       const currentTime = new Date().getTime();
-      this.checkCollisonWithChicken(currentTime);
-      this.checkThrowObjects();
-      this.checkCollisonWithSmallChicken(currentTime);
+      this.checkCollisionsSetInterval100ms(currentTime);
     }, 100);
     setInterval(() => {
       if (charIsDead) return;
       const currentTime = new Date().getTime();
-      this.checkCollisonBossWithBottle(currentTime);
-      this.checkCollisonWithBottle();
-      this.checkCollisonWithCoin();
+      this.checkCollisionsSetInterval10ms(currentTime);
     }, 10);
   }
 
@@ -85,11 +79,45 @@ class World {
   }
 
   /**
+   * Checks collisions every 280ms, including the end boss and chickens hit by bottles.
+   * @param {number} currentTime - The current time in milliseconds.
+   */
+  checkCollisionsSetInterval280ms(currentTime) {
+    this.checkCollisonWithEndboss(currentTime);
+    this.checkCollisonChickenWithBottle();
+    this.checkCollisonSmallChickenWithBottle();
+  }
+
+  /**
+   * Checks collisions every 100ms, including chickens, thrown objects, and small chickens.
+   * @param {number} currentTime - The current time in milliseconds.
+   */
+  checkCollisionsSetInterval100ms(currentTime) {
+    this.checkCollisonWithChicken(currentTime);
+    this.checkThrowObjects();
+    this.checkCollisonWithSmallChicken(currentTime);
+  }
+
+  /**
+   * Checks collisions every 10ms, including the boss with bottles, other bottles, and coins.
+   * @param {number} currentTime - The current time in milliseconds.
+   */
+  checkCollisionsSetInterval10ms(currentTime) {
+    this.checkCollisonBossWithBottle(currentTime);
+    this.checkCollisonWithBottle();
+    this.checkCollisonWithCoin();
+  }
+
+  /**
    * Checks if the character throws objects (F key) and creates a new "ThorwableObject" if appropriate.
    */
   checkThrowObjects() {
     let currentTime = Date.now();
-    if (this.keyboard.F && this.collectedBottles > 0 && currentTime - this.lastThrowTime > this.throwCooldown) {
+    if (
+      this.keyboard.F &&
+      this.collectedBottles > 0 &&
+      currentTime - this.lastThrowTime > this.throwCooldown
+    ) {
       let bottle = new ThorwableObject(
         this.character.x + 50,
         this.character.y + 100
@@ -139,7 +167,10 @@ class World {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
         if (enemy.isDead) return;
         if (alreadyHit) return;
-        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
@@ -164,7 +195,10 @@ class World {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
         if (enemy.isDead) return;
         if (alreadyHit) return;
-        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
+        if (
+          this.character.y + this.character.height <= enemy.y + enemy.height &&
+          this.character.speedY <= 0
+        ) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
