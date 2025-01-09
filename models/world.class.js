@@ -139,22 +139,15 @@ class World {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
         if (enemy.isDead) return;
         if (alreadyHit) return;
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
+        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hitEnemySound.play();
-          }
+          this.checkIfEnemySoundIsMuted();
         } else {
           this.character.hit();
           this.statusBar[0].setPercentageHealth(this.character.energy);
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hurtCharacter.play();
-          }
+          this.checkIfCharacterSoundIsMuted();
         }
         enemy.lastCollision = currentTime;
       }
@@ -171,22 +164,15 @@ class World {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
         if (enemy.isDead) return;
         if (alreadyHit) return;
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
+        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hitEnemySound.play();
-          }
+          this.checkIfEnemySoundIsMuted();
         } else {
           this.character.hit();
           this.statusBar[0].setPercentageHealth(this.character.energy);
-          if (!this.isMuted) {
-            this.soundCollection.sounds.hurtCharacter.play();
-          }
+          this.checkIfCharacterSoundIsMuted();
         }
         enemy.lastCollision = currentTime;
       }
@@ -205,9 +191,7 @@ class World {
         if (alreadyHit) return;
         this.character.hit();
         this.statusBar[0].setPercentageHealth(this.character.energy);
-        if (!this.isMuted) {
-          this.soundCollection.sounds.hurtCharacter.play();
-        }
+        this.checkIfCharacterSoundIsMuted();
         enemy.lastCollision = currentTime;
       }
     });
@@ -219,9 +203,7 @@ class World {
   checkCollisonWithCoin() {
     this.coins.forEach((coin, i) => {
       if (this.character.isColliding(coin)) {
-        if (!this.isMuted) {
-          this.soundCollection.sounds.coinCollectSound.play();
-        }
+        this.checkIfCoinCollectSoundIsMuted();
         this.coins.splice(i, 1);
         this.collectedCoin++;
         this.statusBar[1].setCollectedCoins(this.collectedCoin);
@@ -241,9 +223,7 @@ class World {
         this.bottles.splice(i, 1);
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
-        if (!this.isMuted) {
-          this.soundCollection.sounds.collectBottleSound.play();
-        }
+        this.checkIfBottleCollectSoundIsMuted();
       }
     });
   }
@@ -257,12 +237,7 @@ class World {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
           bottle.splash();
-          if (!this.isMuted) {
-            this.soundCollection.sounds.brokenBottle.play();
-            setTimeout(() => {
-              this.soundCollection.sounds.hitEnemySound.play();
-            }, 500);
-          }
+          this.checkIfBottleHitsEnemySoundIsMuted();
         }
       });
     });
@@ -277,12 +252,7 @@ class World {
         if (bottle.isColliding(enemy) && !enemy.isDead) {
           enemy.hitEnemy();
           bottle.splash();
-          if (!this.isMuted) {
-            this.soundCollection.sounds.brokenBottle.play();
-            setTimeout(() => {
-              this.soundCollection.sounds.hitEnemySound.play();
-            }, 500);
-          }
+          this.checkIfBottleHitsEnemySoundIsMuted();
         }
       });
     });
@@ -300,14 +270,8 @@ class World {
           if (alreadyHit) return;
           enemy.hitEnemy();
           bottle.splash();
-
           this.endbossBar[0].hitEndboss(this.hitCount);
-          if (!this.isMuted) {
-            this.soundCollection.sounds.brokenBottle.play();
-            setTimeout(() => {
-              this.soundCollection.sounds.hitEnemySound.play();
-            }, 500);
-          }
+          this.checkIfBottleHitsEnemySoundIsMuted();
           enemy.lastCollision = currentTime;
         }
       });
@@ -389,5 +353,53 @@ class World {
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();
+  }
+
+  /**
+   * Checks whether the respective sound is already muted, if not the sound effect is muted.
+   */
+  checkIfEnemySoundIsMuted() {
+    if (!this.isMuted) {
+      this.soundCollection.sounds.hitEnemySound.play();
+    }
+  }
+
+  /**
+   * Checks whether the respective sound is already muted, if not the sound effect is muted.
+   */
+  checkIfCharacterSoundIsMuted() {
+    if (!this.isMuted) {
+      this.soundCollection.sounds.hurtCharacter.play();
+    }
+  }
+
+  /**
+   * Checks whether the respective sound is already muted, if not the sound effect is muted.
+   */
+  checkIfCoinCollectSoundIsMuted() {
+    if (!this.isMuted) {
+      this.soundCollection.sounds.coinCollectSound.play();
+    }
+  }
+
+  /**
+   * Checks whether the respective sound is already muted, if not the sound effect is muted.
+   */
+  checkIfBottleCollectSoundIsMuted() {
+    if (!this.isMuted) {
+      this.soundCollection.sounds.collectBottleSound.play();
+    }
+  }
+
+  /**
+   * Checks whether the respective sound is already muted, if not the sound effect is muted.
+   */
+  checkIfBottleHitsEnemySoundIsMuted() {
+    if (!this.isMuted) {
+      this.soundCollection.sounds.brokenBottle.play();
+      setTimeout(() => {
+        this.soundCollection.sounds.hitEnemySound.play();
+      }, 500);
+    }
   }
 }
