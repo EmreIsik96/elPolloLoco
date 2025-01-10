@@ -335,7 +335,7 @@ span {
     background-size: 450%;
   }
 }
-@media (max-width: 650px) {
+@media (max-width: 770px) and (orientation: portrait) {
   .rotateDeviceContainer {
     display: flex;
     text-align: center;
@@ -355,7 +355,7 @@ span {
     z-index: 1002;
   }
 }
-@media only screen and (max-height: 650px) and (orientation: landscape) {
+@media only screen and (max-height: 770px) and (orientation: landscape) {
   .buttonContainer {
     display: none;
   }
