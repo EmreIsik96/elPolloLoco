@@ -292,12 +292,14 @@ span {
   .hud {
     display: block;
   }
-
   .canvasContainer,
   .startContainer,
+  .mainContainer,
   .gameOverContainer,
   .winContainer {
-    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .headerMain,
   .instructionsContainer {
