@@ -46,18 +46,16 @@ class World {
    * Runs the game loop, handling updates and rendering.
    */
   run() {
+    if (charIsDead) return;
     setInterval(() => {
-      if (charIsDead) return;
       const currentTime = new Date().getTime();
       this.checkCollisionsSetInterval280ms(currentTime);
     }, 280);
     setInterval(() => {
-      if (charIsDead) return;
       const currentTime = new Date().getTime();
       this.checkCollisionsSetInterval100ms(currentTime);
     }, 100);
     setInterval(() => {
-      if (charIsDead) return;
       const currentTime = new Date().getTime();
       this.checkCollisionsSetInterval10ms(currentTime);
     }, 10);
