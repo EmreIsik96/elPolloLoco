@@ -113,11 +113,7 @@ class World {
    */
   checkThrowObjects() {
     let currentTime = Date.now();
-    if (
-      this.keyboard.F &&
-      this.collectedBottles > 0 &&
-      currentTime - this.lastThrowTime > this.throwCooldown
-    ) {
+    if (this.keyboard.F && this.collectedBottles > 0 && currentTime - this.lastThrowTime > this.throwCooldown) {
       let bottle = new ThorwableObject(
         this.character.x + 50,
         this.character.y + 100
@@ -165,12 +161,8 @@ class World {
     level1.chicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
-        if (enemy.isDead) return;
-        if (alreadyHit) return;
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
+        if (enemy.isDead || alreadyHit) return;
+        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
@@ -193,12 +185,8 @@ class World {
     level1.smallChicken.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         const alreadyHit = currentTime - enemy.lastCollision < 1000;
-        if (enemy.isDead) return;
-        if (alreadyHit) return;
-        if (
-          this.character.y + this.character.height <= enemy.y + enemy.height &&
-          this.character.speedY <= 0
-        ) {
+        if (enemy.isDead || alreadyHit) return;
+        if (this.character.y + this.character.height <= enemy.y + enemy.height && this.character.speedY <= 0) {
           enemy.isDead = true;
           enemy.dieEnemy();
           this.character.speedY = 10;
@@ -250,10 +238,7 @@ class World {
    */
   checkCollisonWithBottle() {
     this.bottles.forEach((bottle, i) => {
-      if (
-        this.character.isColliding(bottle) &&
-        this.collectedBottles < this.maxCollectedBottles
-      ) {
+      if (this.character.isColliding(bottle) && this.collectedBottles < this.maxCollectedBottles) {
         this.bottles.splice(i, 1);
         this.collectedBottles++;
         this.statusBar[2].setCollectedBottles(this.collectedBottles);
@@ -317,32 +302,26 @@ class World {
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
+    const translateCamera = (offset) => this.ctx.translate(offset, 0);
 
-    this.ctx.translate(-this.camera_x, 0);
+    translateCamera(this.camera_x);
+    ["backgroundObjects", "clouds"].forEach(obj => this.addObjectsToMap(this.level[obj]));
+    translateCamera(-this.camera_x);
+
     this.addObjectsToMap(this.statusBar);
     if (this.character.x > 720 * 4.2) {
-      this.addObjectsToMap(this.endbossBar);
-    }
-    this.ctx.translate(this.camera_x, 0);
+      this.addObjectsToMap(this.endbossBar)
+    };
 
-    this.addObjectsToMap(this.level.chicken);
-    this.addObjectsToMap(this.level.smallChicken);
-    this.addObjectsToMap(this.level.endboss);
-    this.addObjectsToMap(this.thorwableObjects);
-    this.addObjectsToMap(this.coins);
-    this.addObjectsToMap(this.bottles);
+    translateCamera(this.camera_x);
+    ["chicken", "smallChicken", "endboss"].forEach(enemies => this.addObjectsToMap(this.level[enemies]));
+    ["thorwableObjects", "coins", "bottles"].forEach(objects => this.addObjectsToMap(this[objects]));
 
     this.addToMap(this.character);
-    this.ctx.translate(-this.camera_x, 0);
+    translateCamera(-this.camera_x);
 
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
-  }
+    requestAnimationFrame(() => this.draw());
+}
 
   /**
    * Adds multiple objects to the map.

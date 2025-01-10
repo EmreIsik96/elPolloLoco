@@ -95,17 +95,14 @@ class Character extends MovableObject {
    * Controls character movement and animations.
    */
   animate() {
-    setInterval(() => {
-      if (charIsDead) return;
-      
+    if (charIsDead) return;
+    setInterval(() => {      
       this.charWalking();
       this.charJumping();
       this.world.camera_x = -this.x + 250;
     });
-
+    
     setInterval(() => {
-      if (charIsDead) return;
-
       let keyboard = this.world.keyboard;
       let timePassed = (new Date().getTime() - keyboard.lastPressedKey) / 1000;
 
